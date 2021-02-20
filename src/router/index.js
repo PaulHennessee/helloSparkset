@@ -131,6 +131,10 @@ const routes = [
         ]
       },
       {
+          path: "/calendar",
+          component: () => import("../views/CalendarPage.vue")
+      },
+      {
         path: "/event/:id",
         component: () => import("../views/EventPage.vue")
       },

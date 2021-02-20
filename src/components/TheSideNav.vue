@@ -48,8 +48,12 @@ export default {
           path: "/companies"
         },
         {
-          name: AV.User.current().get("fullName").split(" ")[0]+"'s Memos",
+          name: AV.User.current().get("fullName")+"'s Memos",
           path: "/notes"
+        },
+        {
+            name: "Calendar",
+            path: "/calendar"
         }
       ]
     };
