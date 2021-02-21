@@ -11,3 +11,20 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist/index.html"));
 });
 module.exports = app;
+
+
+//msal values here??? yes
+const msalConfig = {
+  auth: {
+    clientId: 'YOUR_APP_ID_HERE', //remember to change this 
+    redirectUri: 'http://localhost:8080'
+  }
+};
+
+const msalRequest = {
+  scopes: [
+    'user.read',
+    'mailboxsettings.read',
+    'calendars.readwrite'
+  ]
+}
