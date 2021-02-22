@@ -54,12 +54,13 @@ async function getEvents() {
         .top(50)
         .get();
   
-      updatePage(Views.calendar, response.value);             // update in vue component
+      //updatePage(Views.calendar, response.value);             // update in vue component
     } catch (error) {
-      updatePage(Views.error, {                               // update in vue component
-        message: 'Error getting events',
-        debug: error
-      });
+        console.log('Error getting events'); //we added this
+      //updatePage(Views.error, {                               // update in vue component
+      //  message: 'Error getting events',
+      //  debug: error
+      //});
     }
   }
 
@@ -67,12 +68,17 @@ async function getEvents() {
     const user = JSON.parse(sessionStorage.getItem('graphUser'));
   
     // Get the user's input
-    const subject = document.getElementById('ev-subject').value;
-    const attendees = document.getElementById('ev-attendees').value;
-    const start = document.getElementById('ev-start').value;
-    const end = document.getElementById('ev-end').value;
-    const body = document.getElementById('ev-body').value;
+
+    //const subject = document.getElementById('ev-subject').value;      // might have to change these lines too
+    //const attendees = document.getElementById('ev-attendees').value;
+    //const start = document.getElementById('ev-start').value;
+    //const end = document.getElementById('ev-end').value;
+    //const body = document.getElementById('ev-body').value;
+
+    const subject = "";
   
+
+
     // Require at least subject, start, and end
     if (!subject || !start || !end) {                       // update in vue component
       updatePage(Views.error, {                     
@@ -126,11 +132,12 @@ async function getEvents() {
         .post(newEvent);
   
       // Return to the calendar view
-      getEvents();
+      //getEvents();
     } catch (error) {
-      updatePage(Views.error, {                              // update in vue component
-        message: 'Error creating event',
-        debug: error
-      });
+        console.log("Error creating event");
+      //updatePage(Views.error, {                              // update in vue component
+      //  message: 'Error creating event',
+      //  debug: error
+      //});
     }
 }

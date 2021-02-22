@@ -13,10 +13,10 @@ app.get("*", (req, res) => {
 module.exports = app;
 
 
-//msal values here??? yes
+//msal values here
 const msalConfig = {
   auth: {
-    clientId: 'YOUR_APP_ID_HERE', //remember to change this 
+    clientId: 'Y9854a95e-b54f-408c-ade5-9971c3f07970', //remember to change this 
     redirectUri: 'http://localhost:8080'
   }
 };

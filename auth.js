@@ -16,16 +16,16 @@ async function signIn() {
       user = await getUser();
       // Save the profile in session
       sessionStorage.setItem('graphUser', JSON.stringify(user));
-      updatePage(Views.home);                                // update in vue component
+      //updatePage(Views.home);                                // update in vue component
     } catch (error) {
       console.log(error);
-      updatePage(Views.error, {                              // update in vue component
-        message: 'Error logging in',
-        debug: error
-      });
+      //updatePage(Views.error, {                              // update in vue component
+        //message: 'Error logging in',
+        //debug: error
+     // });
     }
 }
-  
+
 function signOut() {
     account = null;
     sessionStorage.removeItem('graphUser');
