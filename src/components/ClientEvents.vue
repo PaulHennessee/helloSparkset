@@ -22,8 +22,10 @@
             </button>
         </div>
         <AddEvent v-else @cancel-event="cancel" @create-event="createEvent" />
+        <h1>EventSync component</h1>
         <div>
-            <EventSync :events="upcomingEvents" :fetch-events="fetchEvents" />
+            <EventSync :events="suggestedEvents" />
+            <h1>EndEventSync component</h1>
             <button class="primary">
                 Sync Events!
             </button>
