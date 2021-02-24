@@ -20,7 +20,6 @@
     </table>
 </template>
 
-
 <script>
     //import AV from "leancloud-storage";
     //import Multiselect from "vue-multiselect";

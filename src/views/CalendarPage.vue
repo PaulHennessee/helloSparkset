@@ -1,21 +1,19 @@
 <template>
     <div>
-        <h1>Client Filter</h1>
+        <h1>Calendar</h1>
         <table>
             <tr>
                 <td>
                     <ClientFilter :client-options="clientOptions"
                                     :note="newNote"
-                                    :callback="addNote"
+                                    :callback="fetchCalendars"
                                     :key="lastAddedNote.id" />
                 </td>
                 <td>
                     <MonthDisplay />
                 </td>
                 <td>
-                    <div class="field field--superwide">
-                        <EventSync :events="suggestedEvents" />
-                    </div>
+                    <EventSync :events="suggestedEvents" />
                 </td>
             </tr>
         </table>
@@ -38,19 +36,63 @@ export default {
     return {
         clientOptions: [],
         suggestedEvents: [],
-      tagOptions: [],
-      lastAddedNote: new AV.Object("Note").set("clients", []).set("tags", []),
-      newNote: new AV.Object("Note").set("clients", []).set("tags", []),
+      lastAddedNote: new AV.Object("Note").set("clients", []),
+      newNote: new AV.Object("Note").set("clients", []),
       notes: []
     };
   },
 methods: {
-     
+    fetchClientOptions() {
+        const vm = this;
+        const clientQuery = new AV.Query("Client");
+        clientQuery
+            .limit(1000)
+            .find()
+            .then(clients => {
+                vm.clientOptions = clients.map(client => ({
+                    name: client.get("fullName"),
+                    id: client.id,
+                    client
+                }));
+            })
+            .catch(error => {
+                alert(error);
+            });
+    },
+    fetchCalendars() {
+        //update the calendar to display these people. AND ONLY THESE PEOPLE. -> empty calendar, showCalendar
+        /*const vm = this;
+        const noteQuery = new AV.Query("Note");
+        noteQuery
+            .equalTo("owner", AV.User.current())
+            .include("clients")
+            .descending("createdAt")
+            .limit(1000)
+            .find()
+            .then(notes => {
+                vm.notes = notes.map(note => ({
+                    note,
+                    editing: false
+                }));
+                vm.tagOptions = Array.from(
+                    new Set(
+                        notes.reduce(
+                            (accumulator, note) => [...accumulator, ...note.get("tags")],
+                            []
+                        )
+                    )
+                ).map(tag => ({ name: tag }));
+            })
+            .catch(error => {
+                alert(error);
+            });
+        console.log(vm.lastAddedNote);*/
+    }
 },
   created() {
-    //const vm = this;
+    const vm = this;
     //vm.fetchNotes();
-    //vm.fetchClientOptions();
+    vm.fetchClientOptions();
   },
   computed: {
     
