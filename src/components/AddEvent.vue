@@ -61,15 +61,24 @@
     <div class="field">
       <button type="submit" class="primary">
         Save
+        <!-- attach a login functionality to the save button (open microsoft login in a new window) -->
       </button>
     </div>
     <div class="field">
-      <button type="button" @click="cancel">Cancel</button>
+      <button type="button" @click="cancel">
+        Cancel
+      </button>
+    </div>
+    <div class="field">
+      <button type="button" @click="mlogin">
+        Login
+      </button>
     </div>
   </form>
 </template>
 
 <script>
+import * as myAuth from "@/auth.js";  
 export default {
   name: "AddEvent",
   data() {
@@ -96,7 +105,11 @@ export default {
     cancel() {
       const vm = this;
       vm.$emit("cancel-event");
+    }, 
+    mlogin() {
+      myAuth.signIn();
     }
+
   }
 };
 </script>
