@@ -1,17 +1,17 @@
 <template>
     <table>
         <tr>
-            <td>
+            <td colspan="1">
                 <button>
                     prev
                 </button>
             </td>
-            <td>
+            <td colspan="2">
                 <label>
                     February
                 </label>
             </td>
-            <td>
+            <td colspan="1">
                 <button>
                     next
                 </button>
