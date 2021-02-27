@@ -107,7 +107,7 @@ export default {
       const vm = this;
       vm.$emit("cancel-event");
     }, 
-    mlogin: function() {
+    mlogin() {
       signIn();
     }
 

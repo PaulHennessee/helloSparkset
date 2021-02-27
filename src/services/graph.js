@@ -1,7 +1,7 @@
 import * as MicrosoftGraph from "@microsoft/microsoft-graph-client";
 import * as momentT from "moment-timezone";
 //import * as moment from "moment";
-import {getToken } from "./auth.js";
+import { getToken } from "./auth.js";
 
 // Create an authentication provider
 const authProvider = {
@@ -13,6 +13,8 @@ const authProvider = {
   
 // Initialize the Graph client
 const graphClient = MicrosoftGraph.Client.initWithMiddleware({authProvider});
+
+const user = null; //to get rid of error
 
 async function getUser() {
     return await graphClient
@@ -85,10 +87,12 @@ async function getEvents() {
     //const end = document.getElementById('ev-end').value;
     //const body = document.getElementById('ev-body').value;
 
-   // const subject = "";
-  
-
-
+    const subject = "example event";
+    const attendees = "20";
+    const start = "2021-02-27T21:24";
+    const end = "2021-03-01T12:24";
+    const body = "this would be the description";
+    /*
     // Require at least subject, start, and end
     if (!subject || !start || !end) {                       // update in vue component
       updatePage(Views.error, {                     
@@ -96,7 +100,7 @@ async function getEvents() {
       });
       return;
     }
-  
+    */
     // Build the JSON payload of the event
     let newEvent = {
       subject: subject,
@@ -151,4 +155,4 @@ async function getEvents() {
       //});
     }
 }
-export default {getUser, getEvents, createNewEvent, user, response}; 
+export {getUser, getEvents, createNewEvent, user}; 

@@ -1,12 +1,13 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-//import auth from "./auth";
+import store from "./store";
 import AV from "leancloud-storage";
 AV.init({
   appId: "nLNpC0EXtPodRpoeEmjDFnHC-MdYXbMMI",
   appKey: "n9YcJdJ1dFxtpqOBOLUdbaA1"
 });
+//adding stuff here
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faBars,
