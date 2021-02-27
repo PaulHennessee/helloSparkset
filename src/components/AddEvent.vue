@@ -78,7 +78,8 @@
 </template>
 
 <script>
-import signIn from "../auth";  
+//import * as graph from "../services/graph"; 
+import signIn from "../services/auth";  
 export default {
   name: "AddEvent",
   data() {
@@ -106,7 +107,7 @@ export default {
       const vm = this;
       vm.$emit("cancel-event");
     }, 
-    mlogin() {
+    mlogin: function() {
       signIn();
     }
 

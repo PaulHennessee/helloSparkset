@@ -12,19 +12,3 @@ app.get("*", (req, res) => {
 });
 module.exports = app;
 
-
-//msal values here
-const msalConfig = {
-  auth: {
-    clientId: 'Y9854a95e-b54f-408c-ade5-9971c3f07970', //remember to change this 
-    redirectUri: 'http://localhost:8080'
-  }
-};
-
-const msalRequest = {
-  scopes: [
-    'user.read',
-    'mailboxsettings.read',
-    'calendars.readwrite'
-  ]
-}

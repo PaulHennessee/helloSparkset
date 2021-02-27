@@ -1,3 +1,8 @@
+import * as MicrosoftGraph from "@microsoft/microsoft-graph-client";
+import * as momentT from "moment-timezone";
+//import * as moment from "moment";
+import {getToken } from "./auth.js";
+
 // Create an authentication provider
 const authProvider = {
     getAccessToken: async () => {
@@ -23,9 +28,10 @@ async function getEvents() {
     // Convert user's Windows time zone ("Pacific Standard Time")
     // to IANA format ("America/Los_Angeles")
     // Moment needs IANA format
-    let ianaTimeZone = getIanaFromWindows(user.mailboxSettings.timeZone);
+    let ianaTimeZone = momentT.getIanaFromWindows(user.mailboxSettings.timeZone);
     console.log(`Converted: ${ianaTimeZone}`);
   
+    /*
     // Configure a calendar view for the current week
     // Get midnight on the start of the current week in the user's timezone,
     // but in UTC. For example, for Pacific Standard Time, the time value would be
@@ -34,11 +40,14 @@ async function getEvents() {
     // Set end of the view to 7 days after start of week
     let endOfWeek = moment(startOfWeek).add(7, 'day');
   
+    */
     try {
       // GET /me/calendarview?startDateTime=''&endDateTime=''
       // &$select=subject,organizer,start,end
       // &$orderby=start/dateTime
       // &$top=50
+
+      /* currently not using in test
       let response = await graphClient
         .api('/me/calendarview')
         // Set the Prefer=outlook.timezone header so date/times are in
@@ -53,7 +62,8 @@ async function getEvents() {
         // Maximum 50 events in response
         .top(50)
         .get();
-  
+      */
+     
       //updatePage(Views.calendar, response.value);             // update in vue component
     } catch (error) {
         console.log('Error getting events'); //we added this
@@ -75,7 +85,7 @@ async function getEvents() {
     //const end = document.getElementById('ev-end').value;
     //const body = document.getElementById('ev-body').value;
 
-    const subject = "";
+   // const subject = "";
   
 
 
@@ -141,3 +151,4 @@ async function getEvents() {
       //});
     }
 }
+export default {getUser, getEvents, createNewEvent, user, response}; 

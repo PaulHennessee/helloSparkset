@@ -1,6 +1,28 @@
+import * as Msal from "msal";
+import {getUser, user } from "./graph.js";
+
+//msal values here
+const msalConfig = {
+  auth: {
+    clientId: "Y9854a95e-b54f-408c-ade5-9971c3f07970", //remember to change this 
+    redirectUri: "http://localhost:8080"
+  }
+};
+
+const msalRequest = {
+  scopes: [
+    'user.read',
+    'mailboxsettings.read',
+    'calendars.readwrite'
+  ]
+}
+
 // Create the main MSAL instance
 // configuration parameters are located in config.js
-const msalClient = new msal.PublicClientApplication(msalConfig);
+const msalClient = new Msal.UserAgentApplication(msalConfig); //changed this from publicuser
+
+let account = null;
+
 
 async function signIn() {
     // Login
@@ -26,14 +48,10 @@ async function signIn() {
     }
 }
 
-function signOut() {
-    account = null;
-    sessionStorage.removeItem('graphUser');
-    msalClient.logout();
-}
+
 
 async function getToken() {
-    let account = sessionStorage.getItem('msalAccount');
+    account = sessionStorage.getItem('msalAccount'); //changed from let account
     if (!account){
       throw new Error(
         'User account missing from session. Please sign out and sign in again.');
@@ -51,7 +69,7 @@ async function getToken() {
     } catch (silentError) {
       // If silent requests fails with InteractionRequiredAuthError,
       // attempt to get the token interactively
-      if (silentError instanceof msal.InteractionRequiredAuthError) {
+      if (silentError instanceof Msal.InteractionRequiredAuthError) {
         const interactiveResult = await msalClient.acquireTokenPopup(msalRequest);
         return interactiveResult.accessToken;
       } else {
@@ -59,3 +77,11 @@ async function getToken() {
       }
     }
 }
+
+function signOut() {
+  account = null;
+  sessionStorage.removeItem('graphUser');
+  msalClient.logout();
+}
+
+export default {signIn, signOut, getToken}; 
