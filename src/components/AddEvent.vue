@@ -75,7 +75,7 @@
       </button>
     </div>
     <div class="field">
-      <button type="button" @click="mlogin">
+      <button type="button" @click="syncEvent">
         Sync Event
       </button>
     </div>
@@ -84,7 +84,7 @@
 
 <script>
 import {signIn} from "../services/auth";  
-//import {signIn} from "../services/graph";  
+import {createNewEvent} from "../services/graph";  
 export default {
   name: "AddEvent",
   data() {
@@ -114,6 +114,9 @@ export default {
     }, 
     mlogin() {
       signIn();
+    },
+    syncEvent() {
+      createNewEvent();
     }
 
   }

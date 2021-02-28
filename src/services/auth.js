@@ -31,7 +31,9 @@ export async function signIn() //use this to sign in
       // take this out after testing
       console.log('id_token acquired at: ' + new Date().toString()); 
       // Save the account username, needed for token acquisition
-      sessionStorage.setItem('msalAccount', authResult.account.username);
+      sessionStorage.setItem('msalAccount', authResult.account.username);     
+      
+      // ***** sessionStorage is where they are saving information.might have to change *******
   
       // Get the user's profile from Graph
       user = await getUser();

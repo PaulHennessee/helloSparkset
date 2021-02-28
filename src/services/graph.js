@@ -82,7 +82,7 @@ export async function getEvents() // we will use this to display events on page
 
 export async function createNewEvent() //creates new event. click to test
 {
-    const user = JSON.parse(sessionStorage.getItem('graphUser'));
+    const user = JSON.parse(sessionStorage.getItem('graphUser')); // why is this null?
   
     // Get the user's input
 
