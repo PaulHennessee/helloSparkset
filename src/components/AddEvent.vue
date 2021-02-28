@@ -74,12 +74,17 @@
         Login
       </button>
     </div>
+    <div class="field">
+      <button type="button" @click="mlogin">
+        Sync Event
+      </button>
+    </div>
   </form>
 </template>
 
 <script>
-//import * as graph from "../services/graph"; 
-import signIn from "../services/auth";  
+import {signIn} from "../services/auth";  
+//import {signIn} from "../services/graph";  
 export default {
   name: "AddEvent",
   data() {

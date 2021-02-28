@@ -14,17 +14,19 @@ const authProvider = {
 // Initialize the Graph client
 const graphClient = MicrosoftGraph.Client.initWithMiddleware({authProvider});
 
-const user = null; //to get rid of error
+export const user = null; //to get rid of error
 
-async function getUser() {
+export async function getUser() // only used in auth.js
+{
     return await graphClient
       .api('/me')
       // Only get the fields used by the app
       .select('id,displayName,mail,userPrincipalName,mailboxSettings')
       .get();
-}
+};
 
-async function getEvents() {
+export async function getEvents() // we will use this to display events on page 
+{
     const user = JSON.parse(sessionStorage.getItem('graphUser'));
   
     // Convert user's Windows time zone ("Pacific Standard Time")
@@ -43,7 +45,8 @@ async function getEvents() {
     let endOfWeek = moment(startOfWeek).add(7, 'day');
   
     */
-    try {
+
+   // try {
       // GET /me/calendarview?startDateTime=''&endDateTime=''
       // &$select=subject,organizer,start,end
       // &$orderby=start/dateTime
@@ -67,16 +70,18 @@ async function getEvents() {
       */
      
       //updatePage(Views.calendar, response.value);             // update in vue component
-    } catch (error) {
-        console.log('Error getting events'); //we added this
+   // } catch (error) {
+   //     console.log('Error getting events'); //we added this
       //updatePage(Views.error, {                               // update in vue component
       //  message: 'Error getting events',
       //  debug: error
       //});
-    }
-  }
+  //  }
+    
+};
 
-  async function createNewEvent() {
+export async function createNewEvent() //creates new event. click to test
+{
     const user = JSON.parse(sessionStorage.getItem('graphUser'));
   
     // Get the user's input
@@ -154,5 +159,4 @@ async function getEvents() {
       //  debug: error
       //});
     }
-}
-export {getUser, getEvents, createNewEvent, user}; 
+};

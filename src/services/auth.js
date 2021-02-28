@@ -1,10 +1,9 @@
-import * as Msal from "msal";
-import {getUser, user } from "./graph.js";
+import * as Msal from "@azure/msal-browser";
+import {getUser, user} from "./graph.js";  //might cause problems 
 
-//msal values here
 const msalConfig = {
   auth: {
-    clientId: "Y9854a95e-b54f-408c-ade5-9971c3f07970", //remember to change this 
+    clientId: "9cad936f-afe6-467e-b618-90474ae0f152", //remember to change this to sparkset
     redirectUri: "http://localhost:8080"
   }
 };
@@ -15,16 +14,16 @@ const msalRequest = {
     'mailboxsettings.read',
     'calendars.readwrite'
   ]
-}
+};
 
 // Create the main MSAL instance
 // configuration parameters are located in config.js
-const msalClient = new Msal.UserAgentApplication(msalConfig); //changed this from publicuser
+const msalClient = new Msal.PublicClientApplication(msalConfig);
 
 let account = null;
 
-
-async function signIn() {
+export async function signIn() //use this to sign in
+{
     // Login
     try {
       // Use MSAL to login
@@ -46,11 +45,10 @@ async function signIn() {
         //debug: error
      // });
     }
-}
+};
 
-
-
-async function getToken() {
+export async function getToken() //only used in graph.js
+{
     account = sessionStorage.getItem('msalAccount'); //changed from let account
     if (!account){
       throw new Error(
@@ -76,12 +74,11 @@ async function getToken() {
         throw silentError;
       }
     }
-}
+};
 
-function signOut() {
+export function signOut() //use this to sign out
+{
   account = null;
   sessionStorage.removeItem('graphUser');
   msalClient.logout();
-}
-
-export default {signIn, signOut, getToken}; 
+};
