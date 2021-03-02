@@ -12,7 +12,6 @@
         </div>
         <table>
             <tr>
-                <!--Insert the Client Filter here if needed-->
                 <td colspan="1">
                     <button class="primary" @click="creatingCustomEvent = true">
                         Create Custom Event
