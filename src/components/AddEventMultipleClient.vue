@@ -1,11 +1,11 @@
 <template>
     <form @submit.prevent="createEvent">
         <h1>Create Custom Event</h1>
-        <div>
+        <!--<div>
             <ClientFilter :client-options="clientOptions"
                           :note="newNote"
                           :callback="setClients" />
-        </div>
+        </div>-->
         <div class="field field--half">
             <label>
                 <span>Name</span>
@@ -90,16 +90,16 @@
 </template>
 
 <script>
-import AV from "leancloud-storage";
-import ClientFilter from "@/components/ClientFilter.vue";
+//import AV from "leancloud-storage";
+//import ClientFilter from "@/components/ClientFilter.vue";
 export default {
     name: "AddEventMultipleClient",
     components: {
-        ClientFilter
+       // ClientFilter
     },
   data() {
       return {
-        clientOptions: [],
+        //clientOptions: [],
         newEvent: {
         name: "",
         date: "",
@@ -111,7 +111,7 @@ export default {
     };
   },
 methods: {
-    fetchClientOptions() {
+    /*fetchClientOptions() {
         const vm = this;
         const clientQuery = new AV.Query("Client");
         clientQuery
@@ -127,7 +127,7 @@ methods: {
             .catch(error => {
                 alert(error);
             });
-    },
+    },*/
     createEvent() {
       const vm = this;
       vm.$emit("create-event", vm.newEvent);
@@ -144,14 +144,14 @@ methods: {
       const vm = this;
       vm.$emit("cancel-event");
     },
-    setClients() {
+    /*setClients() {
         //
     },
     created() {
         const vm = this;
         //vm.fetchNotes();
         vm.fetchClientOptions();
-    },
+    }, */
   }
 };
 </script>

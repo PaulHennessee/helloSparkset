@@ -2,7 +2,7 @@
     <div>
         <h1>Calendar</h1>
         <div v-if="creatingCustomEvent" class="field">
-            <AddEventMultipleClient @cancel-event="cancel" @create-event="createEvent" />
+            <AddEventMultipleClient @cancel-event="cancel" @create-event="calendarCreateEvent" />
         </div>
         <div>
             <ClientFilter :client-options="clientOptions"
@@ -49,7 +49,8 @@ import ClientFilter from "@/components/ClientFilter.vue";
 import EventSync from "@/components/EventSync.vue";
 //import MonthDisplay from "@/components/MonthDisplay.vue";
 import AddEventMultipleClient from "@/components/AddEventMultipleClient.vue";
-//import createEvent from "@/components/ClientEvents.vue"
+    import createEvent from "@/components/ClientEvents.vue";
+    //import fetchClientOptions from "@/components/ClientEvents.vue";
 export default {
   name: "CalendarPage",
   components: {
@@ -209,7 +210,10 @@ methods: {
                 alert(error);
             });
     },
-    createEvent(newEvent) {
+    calendarCreateEvent(newEvent) {
+        createEvent(newEvent);
+    },
+    /*createEvent(newEvent) {
         const vm = this;
         const client = AV.Object.createWithoutData("Client", vm.$route.params.id);
         const event = new AV.Object("Event");
@@ -241,7 +245,7 @@ methods: {
             .catch(error => {
                 alert(error);
             });
-    },
+    },*/
     cancel() {
         const vm = this;
         vm.creatingCustomEvent = false;
