@@ -1,6 +1,11 @@
 <template>
     <form @submit.prevent="createEvent">
         <h1>Create Custom Event</h1>
+        <div>
+            <ClientFilter :client-options="clientOptions"
+                          :note="newNote"
+                          :callback="setClients" />
+        </div>
         <div class="field field--half">
             <label>
                 <span>Name</span>
@@ -54,6 +59,25 @@
                        required />
             </label>
         </div>
+        <div class="field field--half">
+            <label>
+                <span>Automatically Sync</span>
+                <toggle-button :value="newEvent.recurringEvent"
+                               :color="{
+            checked: '#36d5d8',
+            unchecked: '#e52f2e'
+          }"
+                               :labels="{
+            checked: 'Yes',
+            unchecked: 'No'
+          }"
+                               :width="72"
+                               :height="42"
+                               :font-size="12"
+                               @change="changeAutomaticSync"
+                               sync />
+            </label>
+        </div>
         <div class="field">
             <button type="submit" class="primary">
                 Save
@@ -66,11 +90,17 @@
 </template>
 
 <script>
+import AV from "leancloud-storage";
+import ClientFilter from "@/components/ClientFilter.vue";
 export default {
-  name: "AddEventMultipleClient",
+    name: "AddEventMultipleClient",
+    components: {
+        ClientFilter
+    },
   data() {
-    return {
-      newEvent: {
+      return {
+        clientOptions: [],
+        newEvent: {
         name: "",
         date: "",
         time: "",
@@ -80,7 +110,24 @@ export default {
       }
     };
   },
-  methods: {
+methods: {
+    fetchClientOptions() {
+        const vm = this;
+        const clientQuery = new AV.Query("Client");
+        clientQuery
+            .limit(1000)
+            .find()
+            .then(clients => {
+                vm.clientOptions = clients.map(client => ({
+                    name: client.get("fullName"),
+                    id: client.id,
+                    client
+                }));
+            })
+            .catch(error => {
+                alert(error);
+            });
+    },
     createEvent() {
       const vm = this;
       vm.$emit("create-event", vm.newEvent);
@@ -89,10 +136,22 @@ export default {
       const vm = this;
       vm.newEvent.recurringEvent = e.value;
     },
+    changeAutomaticSync(e) {
+        const vm = this;
+        vm.newEvent.recurringEvent = e.value;
+    },
     cancel() {
       const vm = this;
       vm.$emit("cancel-event");
-    }
+    },
+    setClients() {
+        //
+    },
+    created() {
+        const vm = this;
+        //vm.fetchNotes();
+        vm.fetchClientOptions();
+    },
   }
 };
 </script>

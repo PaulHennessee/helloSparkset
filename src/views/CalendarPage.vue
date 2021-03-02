@@ -23,7 +23,7 @@
                 </td>-->
                 <td colspan="1">
                     <button>
-                        prev
+                        &lt;
                     </button>
                 </td>
                 <td colspan="2">
@@ -33,7 +33,7 @@
                 </td>
                 <td colspan="1">
                     <button>
-                        next
+                        &gt;
                     </button>
                 </td>
                 <td colspan="1">
