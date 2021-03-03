@@ -1,6 +1,5 @@
 import * as MicrosoftGraph from "@microsoft/microsoft-graph-client";
 import * as momentT from "moment-timezone";
-//import * as moment from "moment";
 import { getToken } from "./auth.js";
 
 // Create an authentication provider
@@ -14,10 +13,10 @@ const authProvider = {
 // Initialize the Graph client
 const graphClient = MicrosoftGraph.Client.initWithMiddleware({authProvider});
 
-export const user = null; //to get rid of error
 
 export async function getUser() // only used in auth.js
 {
+  console.log("makes it here");
     return await graphClient
       .api('/me')
       // Only get the fields used by the app
@@ -27,7 +26,7 @@ export async function getUser() // only used in auth.js
 
 export async function getEvents() // we will use this to display events on page 
 {
-    const user = JSON.parse(sessionStorage.getItem('graphUser'));
+    const user = JSON.parse(window.localStorage.getItem('graphUser'));
   
     // Convert user's Windows time zone ("Pacific Standard Time")
     // to IANA format ("America/Los_Angeles")
@@ -82,7 +81,9 @@ export async function getEvents() // we will use this to display events on page
 
 export async function createNewEvent() //creates new event. click to test
 {
-    const user = JSON.parse(sessionStorage.getItem('graphUser')); // why is this null?
+    const user = JSON.parse(window.localStorage.getItem('graphUser')); // why is this null?
+
+    console.log(user)
   
     // Get the user's input
 
