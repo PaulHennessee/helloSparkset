@@ -1,6 +1,5 @@
 import * as MicrosoftGraph from "@microsoft/microsoft-graph-client";
 import * as momentT from "moment-timezone";
-//import * as moment from "moment";
 import { getToken } from "./auth.js";
 
 // Create an authentication provider
@@ -10,14 +9,14 @@ const authProvider = {
       return await getToken();
     }
   };
-
+  
 // Initialize the Graph client
 const graphClient = MicrosoftGraph.Client.initWithMiddleware({authProvider});
 
-export const user = null; //to get rid of error
 
 export async function getUser() // only used in auth.js
 {
+  console.log("makes it here");
     return await graphClient
       .api('/me')
       // Only get the fields used by the app
@@ -27,14 +26,14 @@ export async function getUser() // only used in auth.js
 
 export async function getEvents() // we will use this to display events on page 
 {
-    const user = JSON.parse(sessionStorage.getItem('graphUser'));
-
+    const user = JSON.parse(window.localStorage.getItem('graphUser'));
+  
     // Convert user's Windows time zone ("Pacific Standard Time")
     // to IANA format ("America/Los_Angeles")
     // Moment needs IANA format
     let ianaTimeZone = momentT.getIanaFromWindows(user.mailboxSettings.timeZone);
     console.log(`Converted: ${ianaTimeZone}`);
-
+  
     /*
     // Configure a calendar view for the current week
     // Get midnight on the start of the current week in the user's timezone,
@@ -68,7 +67,7 @@ export async function getEvents() // we will use this to display events on page
         .top(50)
         .get();
       */
-
+     
       //updatePage(Views.calendar, response.value);             // update in vue component
    // } catch (error) {
    //     console.log('Error getting events'); //we added this
@@ -77,13 +76,15 @@ export async function getEvents() // we will use this to display events on page
       //  debug: error
       //});
   //  }
-
+    
 };
 
 export async function createNewEvent() //creates new event. click to test
 {
-    const user = JSON.parse(sessionStorage.getItem('graphUser')); // why is this null?
+    const user = JSON.parse(window.localStorage.getItem('graphUser')); // why is this null?
 
+    console.log(user)
+  
     // Get the user's input
 
     //const subject = document.getElementById('ev-subject').value;      // might have to change these lines too
@@ -118,12 +119,12 @@ export async function createNewEvent() //creates new event. click to test
         timeZone: user.mailboxSettings.timeZone
       }
     };
-
+  
     if (attendees)
     {
       const attendeeArray = attendees.split(';');
       newEvent.attendees = [];
-
+  
       for (const attendee of attendeeArray) {
         if (attendee.length > 0) {
           newEvent.attendees.push({
@@ -135,7 +136,7 @@ export async function createNewEvent() //creates new event. click to test
         }
       }
     }
-
+  
     if (body)
     {
       newEvent.body = {
@@ -143,13 +144,13 @@ export async function createNewEvent() //creates new event. click to test
         content: body
       };
     }
-
+  
     try {
       // POST the JSON to the /me/events endpoint
       await graphClient
         .api('/me/events')
         .post(newEvent);
-
+  
       // Return to the calendar view
       //getEvents();
     } catch (error) {

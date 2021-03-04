@@ -25,8 +25,8 @@
         <input type="text" v-model="newEvent.notes" />
       </label>
     </div>
-    <div class="field field--half">
-      <label>
+    <div class="field field--half" id="toggle">
+      <label id= "innertoggle">
         <span>Recurring</span>
         <toggle-button
           :value="newEvent.recurringEvent"
@@ -47,7 +47,7 @@
       </label>
     </div>
     <div v-if="newEvent.recurringEvent" class="field field--half">
-      <label>
+      <label id="recurringinput">
         <span>Days Between Events</span>
         <input
           type="number"
@@ -58,18 +58,23 @@
         />
       </label>
     </div>
-    <div class="field">
-      <button type="submit" class="primary">
-        Save
-      </button>
-    </div>
-    <div class="field">
-      <button type="button" @click="cancel">Cancel</button>
+    <div class="submitForm">
+      <div class="field" id="cancel">
+        <button type="button" class="cancel" @click="cancel">Cancel</button>
+      </div>
+      <div class="field" id="saves">
+        <button type="button" class="primary" @click="mlogin">Save &amp; Sync</button>
+      </div>
+      <div class="field" id="save">
+        <button type="submit" class="primary">Save</button>
+      </div>
     </div>
   </form>
 </template>
 
 <script>
+import {signIn} from "../services/auth"; 
+//import {createNewEvent} from "../services/graph";
 export default {
   name: "AddEvent",
   data() {
@@ -96,9 +101,43 @@ export default {
     cancel() {
       const vm = this;
       vm.$emit("cancel-event");
+    }, 
+    mlogin() {
+      signIn();
     }
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+
+#toggle {
+  float: none;
+  display: inline-block; 
+  width: 100%;
+  height:100%;
+}
+#innertoggle {
+  float: right;
+}
+
+.submitForm .field{
+  float: none;
+  display: inline-block;
+}
+#cancel {
+  width: auto;
+  float: left;
+}
+#save {
+  width: auto;
+  float: right;
+  margin-right:6px;
+}
+#saves {
+  width: auto;
+  float: right;
+  margin-left:6px;
+}
+</style>
