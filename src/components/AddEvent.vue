@@ -74,7 +74,7 @@
 
 <script>
 import {signIn} from "../services/auth"; 
-//import {createNewEvent} from "../services/graph";
+import {createNewEvent} from "../services/graph";
 export default {
   name: "AddEvent",
   data() {
@@ -103,7 +103,8 @@ export default {
       vm.$emit("cancel-event");
     }, 
     mlogin() {
-      signIn();
+      signIn(); //if this is failing, pay attention to localhost
+      createNewEvent();
     }
   }
 };
