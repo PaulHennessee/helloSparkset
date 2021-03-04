@@ -1,14 +1,14 @@
 <template>
     <div>
         <h1>Calendar</h1>
-        <div v-if="creatingCustomEvent" class="field">
-            <AddEventMultipleClient @cancel-event="cancel" @create-event="calendarCreateEvent" />
-        </div>
         <div>
             <ClientFilter :client-options="clientOptions"
                           :note="newNote"
                           :callback="fetchCalendars"
                           :key="lastAddedNote.id" />
+        </div>
+        <div v-if="creatingCustomEvent" class="field">
+            <AddEventMultipleClient @cancel-event="cancel" @create-event="calendarCreateEvent" />
         </div>
         <table>
             <tr>
@@ -18,8 +18,8 @@
                     </button>
                 </td>
                 <!--<td colspan="5">
-                    <MonthDisplay />
-                </td>-->
+                <MonthDisplay />
+            </td>-->
                 <td colspan="1">
                     <button>
                         &lt;

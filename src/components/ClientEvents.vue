@@ -1,9 +1,5 @@
 <template>
     <section class="fields">
-        <h1>EventSync</h1>
-        <button class="primary">
-            Sync
-        </button>
         <h1>Upcoming</h1>
         <div class="field field--superwide">
             <EventsTable :events="upcomingEvents" :fetch-events="fetchEvents" />
