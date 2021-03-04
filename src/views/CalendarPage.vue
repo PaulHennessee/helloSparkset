@@ -8,7 +8,8 @@
                           :key="lastAddedNote.id" />
         </div>
         <div v-if="creatingCustomEvent" class="field">
-            <AddEventMultipleClient @cancel-event="cancel" @create-event="calendarCreateEvent" />
+            <!--<AddEventMultipleClient @cancel-event="cancel" @create-event="calendarCreateEvent" />-->
+            <AddEvent @cancel-event="cancel" @create-event="calendarCreateEvent" />
         </div>
         <table>
             <tr>
@@ -48,7 +49,8 @@ import AV from "leancloud-storage";
 import ClientFilter from "@/components/ClientFilter.vue";
 import EventSync from "@/components/EventSync.vue";
 //import MonthDisplay from "@/components/MonthDisplay.vue";
-import AddEventMultipleClient from "@/components/AddEventMultipleClient.vue";
+    //import AddEventMultipleClient from "@/components/AddEventMultipleClient.vue";
+    import AddEvent from "@/components/AddEvent.vue";
     import createEvent from "@/components/ClientEvents.vue";
     //import fetchClientOptions from "@/components/ClientEvents.vue";
 export default {
@@ -57,7 +59,8 @@ export default {
       ClientFilter,
       EventSync,
       //MonthDisplay,
-      AddEventMultipleClient
+      //AddEventMultipleClient
+      AddEvent
   },
   data() {
     return {
