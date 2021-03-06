@@ -16,6 +16,7 @@
             events: Array
         },
         data() {
+            return{};
         },
         methods: {
             
