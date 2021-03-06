@@ -37,7 +37,9 @@
                     </button>
                 </td>
                 <td colspan="1">
-                    <EventSync :events="suggestedEvents" />
+                    <button>
+                        Sync
+                    </button>
                 </td>
             </tr>
         </table>
@@ -47,7 +49,7 @@
 <script>
 import AV from "leancloud-storage";
 import ClientFilter from "@/components/ClientFilter.vue";
-import EventSync from "@/components/EventSync.vue";
+//import EventSync from "@/components/EventSync.vue";
 //import MonthDisplay from "@/components/MonthDisplay.vue";
     //import AddEventMultipleClient from "@/components/AddEventMultipleClient.vue";
     import AddEvent from "@/components/AddEvent.vue";
@@ -57,7 +59,7 @@ export default {
   name: "CalendarPage",
   components: {
       ClientFilter,
-      EventSync,
+      //EventSync,
       //MonthDisplay,
       //AddEventMultipleClient
       AddEvent
