@@ -79,25 +79,24 @@ export async function getEvents() // we will use this to display events on page
     
 };
 
-export async function createNewEvent() //creates new event. click to test
+export async function createNewEvent(name, date, time, notes) //creates new event. click to test
 {
-    const user = JSON.parse(window.localStorage.getItem('graphUser')); // why is this null?
-
-    console.log(user)
-  
-    // Get the user's input
-
-    //const subject = document.getElementById('ev-subject').value;      // might have to change these lines too
-    //const attendees = document.getElementById('ev-attendees').value;
-    //const start = document.getElementById('ev-start').value;
-    //const end = document.getElementById('ev-end').value;
-    //const body = document.getElementById('ev-body').value;
-
-    const subject = "example event";
-    const attendees = "20";
-    const start = "2021-02-27T21:24";
-    const end = "2021-03-01T12:24";
-    const body = "this would be the description";
+    // Get the user's input in this function 
+    // possibly delete attendies
+    // cannot remove end time
+    const user = JSON.parse(window.localStorage.getItem('graphUser')); 
+    /*
+    console.log(user);
+    console.log(name);   // string 
+    console.log(date);   // 2021-05-06
+    console.log(time);   // 10:00 24 hour clock 
+    console.log(notes);  // string
+    */
+    const subject = name;
+    //const attendees = "20";
+    const start = date + "T" + time;
+    const end = date + "T23:59";
+    const body = notes;
     /*
     // Require at least subject, start, and end
     if (!subject || !start || !end) {                       // update in vue component
@@ -113,13 +112,13 @@ export async function createNewEvent() //creates new event. click to test
       start: {
         dateTime: start,
         timeZone: user.mailboxSettings.timeZone
-      },
+      } ,
       end: {
         dateTime: end,
         timeZone: user.mailboxSettings.timeZone
       }
     };
-  
+    /*
     if (attendees)
     {
       const attendeeArray = attendees.split(';');
@@ -136,7 +135,7 @@ export async function createNewEvent() //creates new event. click to test
         }
       }
     }
-  
+    */
     if (body)
     {
       newEvent.body = {
@@ -147,12 +146,11 @@ export async function createNewEvent() //creates new event. click to test
   
     try {
       // POST the JSON to the /me/events endpoint
+      console.log("makes it here helllooooo");
       await graphClient
         .api('/me/events')
         .post(newEvent);
   
-      // Return to the calendar view
-      //getEvents();
     } catch (error) {
         console.log("Error creating event");
       //updatePage(Views.error, {                              // update in vue component

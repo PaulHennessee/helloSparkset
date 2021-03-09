@@ -5,7 +5,8 @@ import {getUser} from "./graph.js";
 const msalConfig = {
   auth: {
     clientId: "9cad936f-afe6-467e-b618-90474ae0f152", //remember to change this to sparkset
-    redirectUri: "http://localhost:8080"
+    redirectUri: "http://localhost:8080",
+    postLogoutRedirectUri: "https://admin.hellosparkset.com/settings"
   }
 };
 
@@ -21,6 +22,8 @@ const msalRequest = {
 const msalClient = new Msal.PublicClientApplication(msalConfig);
 
 let account = null;
+
+// bool function for signed in or not or just return email
 
 export async function signIn() //use this to sign in
 {
@@ -45,6 +48,28 @@ export async function signIn() //use this to sign in
         //debug: error
      // });
     }
+    window.localStorage.setItem('signStatus', true);
+};
+
+
+export function isSignedIn() {
+  console.log(account);
+  if (account) {
+    return true;
+  }
+  return false;
+
+};
+
+export function getEmail() {
+  console.log(account);
+  if (account){
+    return account;
+  }
+  else{
+    console.log("Error no account signed in.")
+  }
+
 };
 
 export async function getToken() //only used in graph.js

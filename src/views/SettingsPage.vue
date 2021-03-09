@@ -73,6 +73,23 @@
             </div>
           </form>
         </section>
+        <section class="fields">
+          <h1>Calendar Account</h1>
+          <div class ="field">
+          <!--
+          <div v-if="isSignedInB" class="field">
+            <span v-model=""></span> -->
+            <button type="submit" @click="signOutB">
+              Sign Out
+            </button>
+          </div>
+          <!--</div>
+          <div v-else class="field">
+            <button type="submit" @click="signInB">
+              Sign In
+            </button>
+          </div> -->
+        </section>
       </div>
     </div>
   </div>
@@ -80,6 +97,7 @@
 
 <script>
 import AV from "leancloud-storage";
+import {signOut} from "../services/auth"; 
 export default {
   name: "SettingsPage",
   data() {
@@ -90,7 +108,8 @@ export default {
         mobilePhoneNumber: "",
         newPassword: "",
         confirmPassword: ""
-      }
+      }//,
+      //isSignedInB: window.localStorage.getItem('signStatus')  //function call here 
     };
   },
   created() {
@@ -157,7 +176,19 @@ export default {
             alert(error);
           });
       }
-    }
+    },
+    signOutB() {
+      signOut();
+    }//,
+    //signInB() {
+      //const vm = this;
+    //  signIn();
+      //vm.isSignedInB = true; //need to change
+    //}//,
+    //getEmailB() {
+    //  document.getElementById("email").innerHTML =  "Email: " + getEmail();
+    //  console.log(document.getElementById("email").innerHTML);
+    //}
   }
 };
 </script>
