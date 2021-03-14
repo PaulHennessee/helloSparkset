@@ -74,21 +74,22 @@
           </form>
         </section>
         <section class="fields">
-          <h1>Calendar Account</h1>
-          <div class ="field">
-          <!--
-          <div v-if="isSignedInB" class="field">
-            <span v-model=""></span> -->
-            <button type="submit" @click="signOutB">
-              Sign Out
-            </button>
-          </div>
-          <!--</div>
-          <div v-else class="field">
-            <button type="submit" @click="signInB">
-              Sign In
-            </button>
-          </div> -->
+          <h1>Outlook Calendar Account</h1>  
+            <div :key="calendarEmail">
+              <div v-if="calendarEmail" class="field field--half">
+                <label> <!-- onload="getEmail()"-->
+                  <span id="email">Email: {{calendarEmail}}</span>
+                </label>
+                <button type="submit" @click="signOutB">
+                  Sign Out
+                </button>
+              </div>
+              <div v-else class="field field--half">
+                <button type="submit" @click="signInB">
+                  Sign In
+                </button>
+              </div>
+            </div>
         </section>
       </div>
     </div>
@@ -97,7 +98,7 @@
 
 <script>
 import AV from "leancloud-storage";
-import {signOut} from "../services/auth"; 
+import {signIn, signOut, getEmail} from "../services/auth"; 
 export default {
   name: "SettingsPage",
   data() {
@@ -108,8 +109,8 @@ export default {
         mobilePhoneNumber: "",
         newPassword: "",
         confirmPassword: ""
-      }//,
-      //isSignedInB: window.localStorage.getItem('signStatus')  //function call here 
+      },
+      calendarEmail: false,
     };
   },
   created() {
@@ -119,6 +120,7 @@ export default {
     vm.pendingChanges.mobilePhoneNumber = AV.User.current().get(
       "mobilePhoneNumber"
     );
+    vm.calendarEmail = getEmail();
   },
   methods: {
     saveChanges() {
@@ -178,19 +180,23 @@ export default {
       }
     },
     signOutB() {
+      const vm = this;
       signOut();
-    }//,
-    //signInB() {
-      //const vm = this;
-    //  signIn();
-      //vm.isSignedInB = true; //need to change
-    //}//,
-    //getEmailB() {
-    //  document.getElementById("email").innerHTML =  "Email: " + getEmail();
-    //  console.log(document.getElementById("email").innerHTML);
-    //}
+      vm.calendarEmail = false;
+    },
+    async signInB() {
+      const vm = this;
+      const response = await signIn();
+      vm.calendarEmail = response;
+    }
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+#email {
+  padding-bottom: 15px;
+}
+
+</style>

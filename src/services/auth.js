@@ -1,5 +1,4 @@
 import * as Msal from "@azure/msal-browser";
-//import AV from "leancloud-storage";
 import {getUser} from "./graph.js";  
 
 const msalConfig = {
@@ -23,8 +22,6 @@ const msalClient = new Msal.PublicClientApplication(msalConfig);
 
 let account = null;
 
-// bool function for signed in or not or just return email
-
 export async function signIn() //use this to sign in
 {
     // Login
@@ -41,41 +38,34 @@ export async function signIn() //use this to sign in
       // Save the profile in session
       window.localStorage.setItem('graphUser', JSON.stringify(user));
       //updatePage(Views.home);                                // update in vue component
+      console.log(user.userPrincipalName);                      //new
+      return user.userPrincipalName;                            //new
     } catch (error) {
       console.log(error);
       //updatePage(Views.error, {                              // update in vue component
         //message: 'Error logging in',
         //debug: error
      // });
+      return false;                                             //new
     }
-    window.localStorage.setItem('signStatus', true);
-};
-
-
-export function isSignedIn() {
-  console.log(account);
-  if (account) {
-    return true;
-  }
-  return false;
-
+    
 };
 
 export function getEmail() {
   console.log(account);
-  if (account){
+  if (account) {
     return account;
   }
-  else{
-    console.log("Error no account signed in.")
+  else {
+    console.log("Error no account signed in.");
+    return false;
   }
-
 };
 
 export async function getToken() //only used in graph.js
 {
     account = window.localStorage.getItem('msalAccount'); //changed from let account
-    if (!account){
+    if (!account) {
       throw new Error(
         'User account missing from session. Please sign out and sign in again.');
     }

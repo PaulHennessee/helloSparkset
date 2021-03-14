@@ -63,7 +63,7 @@
         <button type="button" class="cancel" @click="cancel">Cancel</button>
       </div>
       <div class="field" id="saves">
-        <button type="submit" class="primary" @click="mlogin">Save &amp; Sync</button>
+        <button type="submit" class="primary" @click="sync">Save &amp; Sync</button>
       </div>
       <div class="field" id="save">
         <button type="submit" class="primary">Save</button>
@@ -73,7 +73,6 @@
 </template>
 
 <script>
-import {signIn} from "../services/auth"; 
 import {createNewEvent} from "../services/graph";
 export default {
   name: "AddEvent",
@@ -102,9 +101,8 @@ export default {
       const vm = this;
       vm.$emit("cancel-event");
     }, 
-    mlogin() {
+    sync() {
       const vm = this;
-      signIn(); //if this is failing, pay attention to localhost
       createNewEvent(vm.newEvent.name, vm.newEvent.date,vm.newEvent.time,vm.newEvent.notes);
     }
   }

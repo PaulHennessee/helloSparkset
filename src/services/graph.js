@@ -8,7 +8,7 @@ const authProvider = {
       // Call getToken in auth.js
       return await getToken();
     }
-  };
+};
   
 // Initialize the Graph client
 const graphClient = MicrosoftGraph.Client.initWithMiddleware({authProvider});
@@ -16,7 +16,6 @@ const graphClient = MicrosoftGraph.Client.initWithMiddleware({authProvider});
 
 export async function getUser() // only used in auth.js
 {
-  console.log("makes it here");
     return await graphClient
       .api('/me')
       // Only get the fields used by the app
@@ -24,7 +23,7 @@ export async function getUser() // only used in auth.js
       .get();
 };
 
-export async function getEvents() // we will use this to display events on page 
+export async function getEvents()  // used to retrieve events from calendar, using leancloud for this instead
 {
     const user = JSON.parse(window.localStorage.getItem('graphUser'));
   
@@ -82,22 +81,20 @@ export async function getEvents() // we will use this to display events on page
 export async function createNewEvent(name, date, time, notes) //creates new event. click to test
 {
     // Get the user's input in this function 
-    // possibly delete attendies
-    // cannot remove end time
+    // events on calendar for employees, don't need attendees
+    // add end time at later date per Ted
     const user = JSON.parse(window.localStorage.getItem('graphUser')); 
-    /*
-    console.log(user);
-    console.log(name);   // string 
-    console.log(date);   // 2021-05-06
-    console.log(time);   // 10:00 24 hour clock 
-    console.log(notes);  // string
-    */
+
+    // name = string 
+    // date = "2021-05-06"
+    // time = "10:00" (24 hour clock) 
+    // notes = string
     const subject = name;
-    //const attendees = "20";
     const start = date + "T" + time;
     const end = date + "T23:59";
     const body = notes;
-    /*
+
+    /*   THIS IS ERROR CATCHING - MAY NOT NEED THIS
     // Require at least subject, start, and end
     if (!subject || !start || !end) {                       // update in vue component
       updatePage(Views.error, {                     
@@ -106,6 +103,7 @@ export async function createNewEvent(name, date, time, notes) //creates new even
       return;
     }
     */
+
     // Build the JSON payload of the event
     let newEvent = {
       subject: subject,
@@ -118,24 +116,7 @@ export async function createNewEvent(name, date, time, notes) //creates new even
         timeZone: user.mailboxSettings.timeZone
       }
     };
-    /*
-    if (attendees)
-    {
-      const attendeeArray = attendees.split(';');
-      newEvent.attendees = [];
-  
-      for (const attendee of attendeeArray) {
-        if (attendee.length > 0) {
-          newEvent.attendees.push({
-            type: 'required',
-            emailAddress: {
-              address: attendee
-            }
-          });
-        }
-      }
-    }
-    */
+
     if (body)
     {
       newEvent.body = {
