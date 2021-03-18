@@ -207,6 +207,7 @@ export default {
   computed: {
     sortedEvents() {
       const vm = this;
+      // console.log(vm.events);
       if (vm.sortedBy === "name") {
         return vm.events.sort((a, b) =>
           vm.compareEventName(a, b) ||

@@ -5,7 +5,7 @@
         <section class="fields">
           <h1>
             Showing {{ clients.length }}
-            {{ clients.length === 1 || clients.length === 0? "Client" : "Clients" }}
+            {{ clients.length === 1 ? "Client" : "Clients" }}
           </h1>
           <div class="field field--half">
             <label>
@@ -252,11 +252,14 @@ export default {
     },
     search() {
       const vm = this;
+      // console.log(vm.fields[vm.selectedField]);
+      // console.log("key: ",vm.fields[vm.selectedField].key);
+      // console.log(vm.query);
       if (vm.fields[vm.selectedField].class === "Client") {
         const clientQuery = new AV.Query("Client");
+        // console.log(clientQuery);
         clientQuery
           .contains(vm.fields[vm.selectedField].key, vm.query)
-          .matches(vm.fields[vm.selectedField].key,new RegExp(vm.query, "i"))
           .include("company")
           .limit(1000)
           .find()
@@ -268,9 +271,7 @@ export default {
           });
       } else if (vm.fields[vm.selectedField].class === "Company") {
         const companyQuery = new AV.Query("Company");
-        companyQuery
-          .contains(vm.fields[vm.selectedField].key, vm.query)
-          .matches(vm.fields[vm.selectedField].key,new RegExp(vm.query, "i"));
+        companyQuery.contains(vm.fields[vm.selectedField].key, vm.query);
         const clientQuery = new AV.Query("Client");
         clientQuery
           .matchesQuery("company", companyQuery)
@@ -287,7 +288,6 @@ export default {
         const revisionQuery = new AV.Query("Revision");
         revisionQuery
           .contains(vm.fields[vm.selectedField].key, vm.query)
-          .matches(vm.fields[vm.selectedField].key,new RegExp(vm.query, "i"))
           .equalTo("isLatest", true)
           .include("client")
           .include("client.company")

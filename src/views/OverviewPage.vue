@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="column column--right">
-      <!-- <div class="card">
+      <div class="card">
         <section class="fields">
           <h1>Suggestions</h1>
           <p v-if="suggestedEvents.length">
@@ -44,7 +44,7 @@
             </div>
           </form>
         </section>
-      </div> -->
+      </div>
       <div class="card">
         <section class="fields">
           <h1>Events Reported</h1>
@@ -80,9 +80,7 @@
           <h1>New Clients</h1>
           <div class="field">
             <p v-for="client in stats.newClients" :key="client.id">
-              <router-link :to="`/client/${client.id}`">
               {{ client.get("fullName") }}
-              </router-link>
             </p>
           </div>
         </section>

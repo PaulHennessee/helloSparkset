@@ -1,4 +1,4 @@
-<template>
+    <template>
   <section class="fields">
     <h1>{{ companyName }} Events</h1>
     <div class="field field--superwide">

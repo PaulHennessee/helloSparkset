@@ -40,7 +40,7 @@
                 </td>
                 <td>
                     <form v-if="event.editing" @submit.prevent="update(event)">
-                        <div class="field">
+    <div class="field">
                             <input type="date"
                                    max="2099-12-31"
                                    v-model="event.pendingChanges.date"
@@ -52,8 +52,10 @@
                         <div class="field">
                             <button type="submit" class="primary">
                                 Save
-                            </button>
-                        </div>
+        <button>
+            Sync
+        </button>
+    </div>
                     </form>
                     <a v-else @click="event.editing = true">
                         {{
