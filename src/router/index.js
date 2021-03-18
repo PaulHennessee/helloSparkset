@@ -4,7 +4,6 @@ import AV from "leancloud-storage";
 Vue.use(VueRouter);
 async function isLoggedIn() {
     const user = AV.User.current();
-    //changed
   if (user) {
     try {
       const result = await user.isAuthenticated();
