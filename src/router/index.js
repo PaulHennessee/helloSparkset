@@ -3,7 +3,9 @@ import VueRouter from "vue-router";
 import AV from "leancloud-storage";
 Vue.use(VueRouter);
 async function isLoggedIn() {
-  const user = AV.User.current();
+    const user = AV.User.current();
+    //delete this before pulling
+    //change this before pulling
   if (user) {
     try {
       const result = await user.isAuthenticated();
