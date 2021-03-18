@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\components",
+    "\\src\\router",
+    "\\src\\store",
+    "\\src\\views"
+  ],
+  "SelectedNode": "\\src\\components\\TheGlobalSearch.vue",
+  "PreviewInSolutionExplorer": false
+}
