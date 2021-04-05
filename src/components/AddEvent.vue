@@ -74,6 +74,7 @@
 
 <script>
 import {createNewEvent} from "../services/graph";
+import {signIn, getEmail} from "../services/auth"; 
 export default {
   name: "AddEvent",
   data() {
@@ -85,8 +86,13 @@ export default {
         notes: "",
         recurringEvent: false,
         daysBetween: 1
-      }
+      }, 
+      calendarEmail: false
     };
+  },
+  created() {
+    const vm = this;
+    vm.calendarEmail = getEmail();
   },
   methods: {
     createEvent() {
@@ -101,8 +107,14 @@ export default {
       const vm = this;
       vm.$emit("cancel-event");
     }, 
-    sync() {
+    async sync() {
       const vm = this;
+      //check here if logged in 
+      if (vm.calendarEmail == false) {
+        //log in first 
+        const response = await signIn();
+        vm.calendarEmail = response;
+      }
       createNewEvent(vm.newEvent.name, vm.newEvent.date,vm.newEvent.time,vm.newEvent.notes);
     }
   }

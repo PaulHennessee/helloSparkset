@@ -57,7 +57,7 @@ export function getEmail() {
     return account;
   }
   else {
-    console.log("Error no account signed in.");
+    console.log("No account signed in.");
     return false;
   }
 };
