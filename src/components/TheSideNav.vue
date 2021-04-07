@@ -50,10 +50,6 @@ export default {
         {
           name: AV.User.current().get("fullName")+"'s Memos",
           path: "/notes"
-        },
-        {
-            name: "Calendar",
-            path: "/calendar"
         }
       ]
     };
