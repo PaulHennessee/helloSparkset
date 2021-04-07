@@ -15,14 +15,20 @@
     </div>
     <div class="field field--half">
       <label>
-        <span>Time</span>
+        <span>Start Time</span>
         <input type="time" v-model="newEvent.time" required />
       </label>
     </div>
-    <div class="field field--half">
+        <div class="field field--half">
+      <label>
+        <span>End Time</span>
+        <input type="time" v-model="newEvent.endTime" required />
+      </label>
+    </div>
+    <div class="field">
       <label>
         <span>Notes</span>
-        <input type="text" v-model="newEvent.notes" />
+        <input id="eventNotes" type="text" v-model="newEvent.notes" />
       </label>
     </div>
     <div class="field field--half" id="toggle">
@@ -83,6 +89,7 @@ export default {
         name: "",
         date: "",
         time: "",
+        endTime: "",  //we added this 
         notes: "",
         recurringEvent: false,
         daysBetween: 1
@@ -115,7 +122,8 @@ export default {
         const response = await signIn();
         vm.calendarEmail = response;
       }
-      createNewEvent(vm.newEvent.name, vm.newEvent.date,vm.newEvent.time,vm.newEvent.notes);
+      console.log(vm.calendarEmail);
+      createNewEvent(vm.newEvent.name, vm.newEvent.date,vm.newEvent.time,vm.newEvent.endTime, vm.newEvent.notes);
     }
   }
 };
@@ -123,6 +131,9 @@ export default {
 
 <style scoped>
 
+#eventNotes {
+  width: 100%;
+}
 
 #toggle {
   float: none;

@@ -78,7 +78,7 @@ export async function getEvents()  // used to retrieve events from calendar, usi
     
 };
 
-export async function createNewEvent(name, date, time, notes) //creates new event. click to test
+export async function createNewEvent(name, date, startTime, endTime, notes) //creates new event. click to test
 {
     // Get the user's input in this function 
     // events on calendar for employees, don't need attendees
@@ -90,8 +90,8 @@ export async function createNewEvent(name, date, time, notes) //creates new even
     // time = "10:00" (24 hour clock) 
     // notes = string
     const subject = name;
-    const start = date + "T" + time;
-    const end = date + "T23:59";
+    const start = date + "T" + startTime;
+    const end = date + "T" + endTime;
     const body = notes;
 
     /*   THIS IS ERROR CATCHING - MAY NOT NEED THIS
