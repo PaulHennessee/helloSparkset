@@ -31,8 +31,8 @@
         <input id="eventNotes" type="text" v-model="newEvent.notes" />
       </label>
     </div>
-    <div class="field field--half" id="toggle">
-      <label id= "innertoggle">
+    <div class="field field--half">
+      <label>
         <span>Recurring</span>
         <toggle-button
           :value="newEvent.recurringEvent"
@@ -64,15 +64,40 @@
         />
       </label>
     </div>
+    <div class="field"><!--placeholder div to keep spacing of sync toggle looking nice--></div>
+    <div class="field" id="save">
+        <label>
+            <span>Syncing</span>
+            <toggle-button
+              :value="newEvent.syncing"
+              :color="{
+                checked: '#36d5d8',
+                unchecked: '#e52f2e'
+              }"
+              :labels="{
+                checked: 'Yes',
+                unchecked: 'No'
+              }"
+              :width="72"
+              :height="42"
+              :font-size="12"
+              @change="changeSyncing"
+              sync />
+        </label>
+    </div>
+    <div class="field"><!--placeholder div to keep spacing of sync toggle looking nice--></div> 
     <div class="submitForm">
       <div class="field" id="cancel">
         <button type="button" class="cancel" @click="cancel">Cancel</button>
       </div>
-      <div class="field" id="saves">
+      <!--<div class="field" id="saves">
         <button type="submit" class="primary" @click="sync">Save &amp; Sync</button>
+      </div>-->
+      <div v-if="newEvent.syncing" class="field" id="save">
+          <button type="submit" class="primary" @click="sync">Save &amp; Sync</button>
       </div>
-      <div class="field" id="save">
-        <button type="submit" class="primary">Save</button>
+      <div v-if="!newEvent.syncing" class="field" id="save">
+          <button type="submit" class="primary">Save</button>
       </div>
     </div>
   </form>
@@ -92,6 +117,7 @@ export default {
         endTime: "",  //we added this 
         notes: "",
         recurringEvent: false,
+        syncing: true,
         daysBetween: 1
       }, 
       calendarEmail: false
@@ -109,6 +135,10 @@ export default {
     changeRecurringEvent(e) {
       const vm = this;
       vm.newEvent.recurringEvent = e.value;
+    },
+    changeSyncing(e) {
+      const vm = this;
+      vm.newEvent.syncing = e.value;
     },
     cancel() {
       const vm = this;
