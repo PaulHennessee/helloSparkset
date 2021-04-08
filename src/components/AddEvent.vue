@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="createEvent">
-    <h1>Create Custom Event</h1>
+    <h1 id="customEvent">Create Custom Event</h1>
     <div class="field field--half">
       <label>
         <span>Name</span>
@@ -130,11 +130,9 @@ export default {
 </script>
 
 <style scoped>
-
-#eventNotes {
-  width: 100%;
+#customEvent { 
+  margin-top: 0;
 }
-
 #toggle {
   float: none;
   display: inline-block; 
@@ -148,6 +146,7 @@ export default {
 .submitForm .field{
   float: none;
   display: inline-block;
+  margin-bottom: 0;
 }
 #cancel {
   width: auto;
