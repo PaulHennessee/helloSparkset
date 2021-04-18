@@ -34,7 +34,7 @@
     <div class="field field--half" id="repeat">
       <label>
         <span>Repeat</span> 
-        <select v-model="recurringEvent">
+        <select v-model="recurringEventType">
           <option>Never</option>
           <option>Daily</option>
           <option>Weekly</option>
@@ -101,9 +101,11 @@ export default {
         time: "",
         endTime: "",  //we added this 
         notes: "",
-        recurringEvent: "",
+        recurringEvent: false,
+        recurringEventType: "", // just added this, need to add daysbetween 
         syncing: true,
-        endRepeat: ""
+        endRepeat: "",
+        daysBetweenEvents: ""
       }, 
       calendarEmail: false
     };
@@ -111,7 +113,7 @@ export default {
   created() {
     const vm = this;
     vm.calendarEmail = getEmail();
-    vm.recurringEvent = "Never";
+    vm.recurringEventType = "Never";
   },
   methods: {
     createEvent() {
@@ -142,10 +144,18 @@ export default {
       console.log(vm.calendarEmail);
       createNewEvent(vm.newEvent.name, vm.newEvent.date,vm.newEvent.time,vm.newEvent.endTime, vm.newEvent.notes);
     },
-    recurringSync() {
-      //  using end date, calculates the number of times an event must be created 
+    recurringSync() { //neglect to do original event so this can be called from async sync()
+      //  using end date, calculate the number of times an event must be created 
+      // if daily, 
+      // add one to day until it goes over end date, need to know what calendar looks like for all
+      // if weekly, 
+      // how do you get the current date? use start date 
+      // take the difference between start data and end date and add 1. keep adding 8 until it goes over this number
+      // how do you know what a week from now looks like? 
+      // if monthly, 
+      // change the month, not the day until it goes past end date
+      // for each, check dates are valid in calendar
       
-
     }
   }
 };
