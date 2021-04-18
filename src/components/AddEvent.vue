@@ -20,41 +20,42 @@
             </label>
         </div>
         <div class="field field--half">
-            <label>
-                <span>End Time</span>
-                <input type="time" v-model="newEvent.endTime" required />
-            </label>
-        </div>
-        <div class="field">
-            <label>
-                <span>Notes</span>
-                <input id="eventNotes" type="text" v-model="newEvent.notes" />
-            </label>
-        </div>
-        <div class="field field--half" id="repeat">
-            <label>
-                <span>Repeat</span>
-                <select v-model="recurringEvent">
-                    <option value="Never">Never</option>
-                    <option>Daily</option>
-                    <option>Weekly</option>
-                    <option>Monthly</option>
-                    <option>Yearly</option>
-                </select>
-            </label>
-        </div>
-        <div class="field field--half" id="repeatEnd">
-            <label>
-                <span>End Repeat</span>
-                <input type="date" max="2099-12-31" v-model="newEvent.endRepeat" required />
-            </label>
-        </div>
-        <div class="field"><!--placeholder div to keep spacing of sync toggle looking nice--></div>
-        <div class="field" id="syncingToggle">
-            <label>
-                <span>Syncing</span>
-                <toggle-button :value="newEvent.syncing"
-                               :color="{
+      <label>
+        <span>End Time</span>
+        <input type="time" v-model="newEvent.endTime" required />
+      </label>
+    </div>
+    <div class="field">
+      <label> 
+        <span>Notes</span>
+        <input id="eventNotes" type="text" v-model="newEvent.notes" />
+      </label> 
+    </div> 
+    <div class="field field--half" id="repeat">
+      <label>
+        <span>Repeat</span> 
+        <select v-model="recurringEventType">
+          <option>Never</option>
+          <option>Daily</option>
+          <option>Weekly</option>
+          <option>Monthly</option>
+          <option>Yearly</option>
+        </select>
+      </label>
+    </div>
+    <div class="field field--half" id="repeatEnd">
+      <label> 
+        <span>End Repeat</span> 
+        <input type="date" max="2099-12-31" v-model="newEvent.endRepeat" required />
+      </label> 
+    </div>
+    <div class="field"><!--placeholder div to keep spacing of sync toggle looking nice--></div>
+    <div class="field" id="syncingToggle">
+        <label>
+            <span>Syncing</span>
+            <toggle-button
+              :value="newEvent.syncing"
+              :color="{
                 checked: '#36d5d8',
                 unchecked: '#e52f2e'
               }"
@@ -104,9 +105,11 @@
                     time: "",
                     endTime: "",  //we added this
                     notes: "",
-                    recurringEvent: "",
+                    recurringEvent: false,
+                    recurringEventType: "", // just added this, need to add daysbetween 
                     syncing: true,
                     endRepeat: "",
+                    daysBetweenEvents: ""
                 },
                 calendarEmail: false
             };
@@ -114,7 +117,7 @@
         created() {
             const vm = this;
             vm.calendarEmail = getEmail();
-            vm.recurringEvent = "Never";
+            vm.recurringEventType = "Never";
         },
         methods: {
             createEvent() {
@@ -147,16 +150,24 @@
                     vm.calendarEmail = response;
                 }
 
-                console.log(vm.calendarEmail);
-                createNewEvent(vm.newEvent.name, vm.newEvent.date, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
-            },
-            recurringSync() {
-                //  using end date, calculates the number of times an event must be created
-
-
-            }
-        }
-    };
+      console.log(vm.calendarEmail);
+      createNewEvent(vm.newEvent.name, vm.newEvent.date,vm.newEvent.time,vm.newEvent.endTime, vm.newEvent.notes);
+    },
+    recurringSync() { //neglect to do original event so this can be called from async sync()
+      //  using end date, calculate the number of times an event must be created 
+      // if daily, 
+      // add one to day until it goes over end date, need to know what calendar looks like for all
+      // if weekly, 
+      // how do you get the current date? use start date 
+      // take the difference between start data and end date and add 1. keep adding 8 until it goes over this number
+      // how do you know what a week from now looks like? 
+      // if monthly, 
+      // change the month, not the day until it goes past end date
+      // for each, check dates are valid in calendar
+      
+    }
+  }
+};
 </script>
 
 <style scoped>
