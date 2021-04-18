@@ -32,14 +32,22 @@
       </label> 
     </div> 
     <div class="field field--half" id="repeat">
-      <span>Repeat</span> 
-      <select v-model="recurringEvent">
-        <option>Never</option>
-        <option>Daily</option>
-        <option>Weekly</option>
-        <option>Monthly</option>
-        <option>Yearly</option>
-      </select>
+      <label>
+        <span>Repeat</span> 
+        <select v-model="recurringEvent">
+          <option>Never</option>
+          <option>Daily</option>
+          <option>Weekly</option>
+          <option>Monthly</option>
+          <option>Yearly</option>
+        </select>
+      </label>
+    </div>
+    <div class="field field--half" id="repeatEnd">
+      <label> 
+        <span>End Repeat</span> 
+        <input type="date" max="2099-12-31" v-model="newEvent.endRepeat" required />
+      </label> 
     </div>
     <div class="field"><!--placeholder div to keep spacing of sync toggle looking nice--></div>
     <div class="field" id="syncingToggle">
@@ -95,7 +103,7 @@ export default {
         notes: "",
         recurringEvent: "",
         syncing: true,
-        daysBetween: 1
+        endRepeat: ""
       }, 
       calendarEmail: false
     };
@@ -130,8 +138,14 @@ export default {
         const response = await signIn();
         vm.calendarEmail = response;
       }
+
       console.log(vm.calendarEmail);
       createNewEvent(vm.newEvent.name, vm.newEvent.date,vm.newEvent.time,vm.newEvent.endTime, vm.newEvent.notes);
+    },
+    recurringSync() {
+      //  using end date, calculates the number of times an event must be created 
+      
+
     }
   }
 };
@@ -146,8 +160,14 @@ export default {
   display: inline-block;
   margin-bottom: 0;
 }
-#repeat {
+/* #repeat {
   margin-bottom: 0;
+} */
+
+#repeatEnd {
+  margin-bottom: 0;
+  padding: 0 0 0 16px;
+
 }
 #syncingToggle {
   width: auto;
