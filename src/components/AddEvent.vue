@@ -46,7 +46,7 @@
     <div class="field field--half" id="repeatEnd">
       <label> 
         <span>End Repeat</span> 
-        <input type="date" max="2099-12-31" v-model="newEvent.endRepeat" required />
+        <input type="date" max="2099-12-31" v-model="newEvent.endRepeatDate" required />
       </label> 
     </div>
     <div class="field"><!--placeholder div to keep spacing of sync toggle looking nice--></div>
@@ -99,13 +99,13 @@ export default {
         name: "",
         date: "",
         time: "",
-        endTime: "",  //we added this 
+        endTime: "", 
         notes: "",
         recurringEvent: false,
-        recurringEventType: "", // just added this, need to add daysbetween 
-        syncing: true,
-        endRepeat: "",
-        daysBetweenEvents: ""
+        daysBetween: 1,
+        recurringEventType: "", // takes in "Daily", "Weekly", "Monthly", "Yearly"
+        endRepeatDate: "",
+        syncing: true
       }, 
       calendarEmail: false
     };
@@ -140,22 +140,60 @@ export default {
         const response = await signIn();
         vm.calendarEmail = response;
       }
-
+      //call recurringsync using conditional here
+      if (vm.recurringEventType != "Never") {
+        recurringSync();
+      }
       console.log(vm.calendarEmail);
-      createNewEvent(vm.newEvent.name, vm.newEvent.date,vm.newEvent.time,vm.newEvent.endTime, vm.newEvent.notes);
+      createNewEvent(vm.newEvent.name, vm.newEvent.date, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
     },
-    recurringSync() { //neglect to do original event so this can be called from async sync()
-      //  using end date, calculate the number of times an event must be created 
-      // if daily, 
-      // add one to day until it goes over end date, need to know what calendar looks like for all
-      // if weekly, 
-      // how do you get the current date? use start date 
-      // take the difference between start data and end date and add 1. keep adding 8 until it goes over this number
-      // how do you know what a week from now looks like? 
-      // if monthly, 
-      // change the month, not the day until it goes past end date
-      // for each, check dates are valid in calendar
-      
+    recurringSync() {  
+      // let async sync() do original event so this can be called from async sync()
+      const vm = this; 
+      let currentDate = new Date(vm.newEvent.date + "T" + vm.newEvent.time + ":00"); // original or start date given
+      let endDate = new Date(vm.newEvent.endRepeatDate + "T" + vm.newEvent.time + ":00"); // end repeat date 
+
+      while (currentDate < endDate) { //start date comes before end date 
+        if (vm.recurringEventType == "Daily") {   //remember to make sure recurringEvent can't be False w type being something
+          //require adding days to date object 
+          currentDate.setDate(currentDate.getDate() + 1);
+          //check again current date is valid, don't have to do this for daily. assuming end date inclusive
+
+          //date needs to look like this "2021-05-06"
+          let formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate;
+          createNewEvent(vm.newEvent.name, formattedDate, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
+        }
+        else if (vm.recurringEventType == "Weekly") {
+          //require adding 8 days to date object
+          currentDate.setDate(currentDate.getDate() + 8);
+          //check again current date is valid, don't have to do this for daily. assuming end date inclusive
+          if (currentDate <= endDate) {
+            //date needs to look like this "2021-05-06"
+            let formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate;
+            createNewEvent(vm.newEvent.name, formattedDate, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
+          }
+        }
+        else if (vm.recurringEventType == "Monthly") {
+          //require adding a month to date object
+          currentDate.setMonth(currentDate.getMonth() + 1);
+          //check again current date is valid, don't have to do this for daily. assuming end date inclusive
+          if (currentDate <= endDate) {
+            //date needs to look like this "2021-05-06"
+            let formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate;
+            createNewEvent(vm.newEvent.name, formattedDate, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
+          }
+        }
+        else { //assuming it's yearly here
+          //require adding a year to date object
+          currentDate.setFullYear(currentDate.getFullYear() + 1);
+          //check again current date is valid, don't have to do this for daily. assuming end date inclusive
+          if (currentDate <= endDate) {
+            //date needs to look like this "2021-05-06"
+            let formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate;
+            createNewEvent(vm.newEvent.name, formattedDate, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
+          }
+        }
+      }
     }
   }
 };
