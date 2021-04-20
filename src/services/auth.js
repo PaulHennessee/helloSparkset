@@ -3,8 +3,8 @@ import {getUser} from "./graph.js";
 
 const msalConfig = {
   auth: {
-    clientId: "9cad936f-afe6-467e-b618-90474ae0f152", //remember to change this to sparkset
-    redirectUri: "http://localhost:8080",
+    clientId: "bbe68f28-08fb-4b1c-8043-c1dc402550de", //changed to sparkset
+    redirectUri: "http://localhost:8080",               //remember to change this on live site
     postLogoutRedirectUri: "https://admin.hellosparkset.com/settings"
   }
 };

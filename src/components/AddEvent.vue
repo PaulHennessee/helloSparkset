@@ -20,58 +20,56 @@
             </label>
         </div>
         <div class="field field--half">
-      <label>
-        <span>End Time</span>
-        <input type="time" v-model="newEvent.endTime" required />
-      </label>
-    </div>
-    <div class="field">
-      <label> 
-        <span>Notes</span>
-        <input id="eventNotes" type="text" v-model="newEvent.notes" />
-      </label> 
-    </div> 
-    <div class="field field--half" id="repeat">
-      <label>
-        <span>Repeat</span> 
-        <select v-model="recurringEventType">
-          <option>Never</option>
-          <option>Daily</option>
-          <option>Weekly</option>
-          <option>Monthly</option>
-          <option>Yearly</option>
-        </select>
-      </label>
-    </div>
-    <div class="field field--half" id="repeatEnd">
-      <label> 
-        <span>End Repeat</span> 
-        <input type="date" max="2099-12-31" v-model="newEvent.endRepeatDate" required />
-      </label> 
-    </div>
-    <div class="field"><!--placeholder div to keep spacing of sync toggle looking nice--></div>
-    <div class="field" id="syncingToggle">
-        <label>
-            <span>Syncing</span>
-            <toggle-button
-              :value="newEvent.syncing"
-              :color="{
-                checked: '#36d5d8',
-                unchecked: '#e52f2e'
-              }"
-                               :labels="{
-                checked: 'Yes',
-                unchecked: 'No'
-              }"
-                               :width="72"
-                               :height="42"
-                               :font-size="12"
-                               @change="changeSyncing"
-                               sync />
-            </label>
+          <label>
+            <span>End Time</span>
+            <input type="time" v-model="newEvent.endTime" required />
+          </label>
         </div>
-        <div class="field"><!--placeholder div to keep spacing of sync toggle looking nice--></div>
-        <div class="submitForm">
+        <div class="field">
+          <label> 
+            <span>Notes</span>
+            <input id="eventNotes" type="text" v-model="newEvent.notes" />
+          </label> 
+        </div> 
+        <div class="field field--half" id="repeat">
+          <label>
+            <span>Repeat</span> 
+            <select v-model="newEvent.recurringEventType">
+              <option value="Never">Never</option>
+              <option value="Daily">Daily</option>
+              <option value="Weekly">Weekly</option>
+              <option value="Monthly">Monthly</option>
+              <option value="Yearly">Yearly</option>
+            </select>
+          </label>
+        </div>
+        <div class="field field--half" id="repeatEnd" :key="newEvent.recurringEventType">
+          <label v-if="newEvent.recurringEventType != 'Never'"> 
+            <span>End Repeat</span> 
+            <input type="date" max="2099-12-31" v-model="newEvent.endRepeatDate" required />
+          </label> 
+        </div>
+        <div class="field" id="syncingToggle">
+            <label>
+                <span>Syncing</span>
+                <toggle-button
+                  :value="newEvent.syncing"
+                  :color="{
+                    checked: '#36d5d8',
+                    unchecked: '#e52f2e'
+                  }"
+                  :labels="{
+                    checked: 'Yes',
+                    unchecked: 'No'
+                  }"
+                  :width="72"
+                  :height="42"
+                  :font-size="12"
+                  @change="changeSyncing"
+                  sync />
+                </label>
+        </div>
+        <div class="submitForm"> 
             <!--<div class="field" id="saves">
               <button type="submit" class="primary" @click="sync">Save &amp; Sync</button>
             </div>-->
@@ -118,7 +116,7 @@ export default {
   created() {
     const vm = this;
     vm.calendarEmail = getEmail();
-    vm.recurringEventType = "Never";
+    vm.newEvent.recurringEventType = "Never";
   },
   methods: {
     createEvent() {
@@ -151,8 +149,8 @@ export default {
         vm.calendarEmail = response;
       }
       //call recurringsync using conditional here
-      if (vm.recurringEventType != "Never") {
-        recurringSync();
+      if (vm.newEvent.recurringEventType != "Never") {
+        vm.recurringSync();
       }
       console.log(vm.calendarEmail);
       createNewEvent(vm.newEvent.name, vm.newEvent.date, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
@@ -164,7 +162,7 @@ export default {
       let endDate = new Date(vm.newEvent.endRepeatDate + "T" + vm.newEvent.time + ":00"); // end repeat date 
 
       while (currentDate < endDate) { //start date comes before end date 
-        if (vm.recurringEventType == "Daily") {   //remember to make sure recurringEvent can't be False w type being something
+        if (vm.newEvent.recurringEventType == "Daily") {   //remember to make sure recurringEvent can't be False w type being something
           //require adding days to date object 
           currentDate.setDate(currentDate.getDate() + 1);
           //check again current date is valid, don't have to do this for daily. assuming end date inclusive
@@ -173,7 +171,7 @@ export default {
           let formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate;
           createNewEvent(vm.newEvent.name, formattedDate, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
         }
-        else if (vm.recurringEventType == "Weekly") {
+        else if (vm.newEvent.recurringEventType == "Weekly") {
           //require adding 8 days to date object
           currentDate.setDate(currentDate.getDate() + 8);
           //check again current date is valid, don't have to do this for daily. assuming end date inclusive
@@ -183,7 +181,7 @@ export default {
             createNewEvent(vm.newEvent.name, formattedDate, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
           }
         }
-        else if (vm.recurringEventType == "Monthly") {
+        else if (vm.newEvent.recurringEventType == "Monthly") {
           //require adding a month to date object
           currentDate.setMonth(currentDate.getMonth() + 1);
           //check again current date is valid, don't have to do this for daily. assuming end date inclusive
@@ -210,45 +208,46 @@ export default {
 </script>
 
 <style scoped>
-        #customEvent {
-            margin-top: 0;
-        }
+  #customEvent {
+      margin-top: 0;
+  }
 
-        .submitForm .field {
-            float: none;
-            display: inline-block;
-            margin-bottom: 0;
-        }
-        /* #repeat {
+  .submitForm .field {
+      float: none;
+      display: inline-block;
       margin-bottom: 0;
-    } */
+  }
+  /*#repeat {
+      margin-bottom: 0;
+  } */
 
-        #repeatEnd {
-            margin-bottom: 0;
-            padding: 0 0 0 16px;
-        }
+   #repeatEnd {
+      float: right;
+      margin-bottom: 0;
+      padding: 0 0 0 16px; 
+  } 
 
-        #syncingToggle {
-            width: auto;
-            float: left;
-        }
+  /* #syncingToggle {
+      float: left;
+  } */
 
-        #save {
-            width: auto;
-            float: right;
-        }
+  #save {
+      width: auto;
+      float: right;
+  }
 
-            #save .primary {
-                width: 70px;
-            }
+  #cancel {
+      width: auto;
+      float: right;
+      margin-right: 21px;
+  }
 
-        #cancel .primary {
-            width: 70px;
-        }
+  #save .primary {
+      width: 70px;
+  }
 
-        #cancel {
-            width: auto;
-            float: right;
-            margin-right: 21px;
-        }
+  #cancel .primary {
+      width: 70px;
+  }
+
 </style>
