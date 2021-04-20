@@ -168,7 +168,7 @@ export default {
           //check again current date is valid, don't have to do this for daily. assuming end date inclusive
 
           //date needs to look like this "2021-05-06"
-          let formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate;
+          let formattedDate = currentDate.toISOString().split('T')[0];
           createNewEvent(vm.newEvent.name, formattedDate, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
         }
         else if (vm.newEvent.recurringEventType == "Weekly") {
@@ -177,7 +177,7 @@ export default {
           //check again current date is valid, don't have to do this for daily. assuming end date inclusive
           if (currentDate <= endDate) {
             //date needs to look like this "2021-05-06"
-            let formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate;
+            let formattedDate = currentDate.toISOString().split('T')[0];
             createNewEvent(vm.newEvent.name, formattedDate, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
           }
         }
@@ -187,7 +187,7 @@ export default {
           //check again current date is valid, don't have to do this for daily. assuming end date inclusive
           if (currentDate <= endDate) {
             //date needs to look like this "2021-05-06"
-            let formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate;
+            let formattedDate = currentDate.toISOString().split('T')[0];
             createNewEvent(vm.newEvent.name, formattedDate, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
           }
         }
@@ -197,7 +197,7 @@ export default {
           //check again current date is valid, don't have to do this for daily. assuming end date inclusive
           if (currentDate <= endDate) {
             //date needs to look like this "2021-05-06"
-            let formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate;
+            let formattedDate = currentDate.toISOString().split('T')[0];
             createNewEvent(vm.newEvent.name, formattedDate, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
           }
         }

@@ -84,7 +84,11 @@ export async function createNewEvent(name, date, startTime, endTime, notes) //cr
     // events on calendar for employees, don't need attendees
     // add end time at later date per Ted
     const user = JSON.parse(window.localStorage.getItem('graphUser')); 
-
+    console.log("name: " + name);
+    console.log("date: " + date);
+    console.log("startTime: " + startTime);
+    console.log("endTime: " + endTime);
+    console.log("notes: " + notes);
     // name = string 
     // date = "2021-05-06"
     // time = "10:00" (24 hour clock) 
