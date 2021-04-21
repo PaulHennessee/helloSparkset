@@ -46,7 +46,7 @@
         <div class="field field--half" id="repeatEnd" :key="newEvent.recurringEventType">
           <label v-if="newEvent.recurringEventType != 'Never'"> 
             <span>End Repeat</span> 
-            <input type="date" max="2099-12-31" v-model="newEvent.endRepeatDate" required />
+            <input type="date" max="2099-12-31" v-model="newEvent.endRepeatDate" @click="changeRecurringStatus" required />
           </label> 
         </div>
         <div class="field" id="syncingToggle">
@@ -128,7 +128,7 @@ export default {
       }
       vm.$emit("create-event", vm.newEvent);
     },
-    changeRecurringEvent(e) {
+    changeRecurringEvent(e) { //we won't end up needing this
       const vm = this;
       vm.newEvent.recurringEvent = e.value;
     },
@@ -140,6 +140,27 @@ export default {
       const vm = this;
       vm.$emit("cancel-event");
     }, 
+    changeRecurringStatus() {
+      const vm = this; 
+      if (vm.newEvent.recurringEventType == "Daily") {
+        vm.newEvent.recurringEvent = true; 
+        vm.newEvent.daysBetween = 1;
+        console.log(vm.newEvent.recurringEvent);
+      }
+      else if (vm.newEvent.recurringEventType == "Weekly") {
+        vm.newEvent.recurringEvent = true; 
+        vm.newEvent.daysBetween = 7;
+      }
+      else if (vm.newEvent.recurringEventType == "Monthly") {
+        vm.newEvent.recurringEvent = true; 
+        vm.newEvent.daysBetween = 30;
+      }
+      else if (vm.newEvent.recurringEventType == "Yearly") {
+        vm.newEvent.recurringEvent = true; 
+        vm.newEvent.daysBetween = 365;
+      }
+      console.log(vm.newEvent.recurringEvent);
+    },
     async sync() {
       const vm = this;
       //check here if logged in 
@@ -160,7 +181,7 @@ export default {
       const vm = this; 
       let currentDate = new Date(vm.newEvent.date + "T" + vm.newEvent.time + ":00"); // original or start date given
       let endDate = new Date(vm.newEvent.endRepeatDate + "T" + vm.newEvent.time + ":00"); // end repeat date 
-
+      
       while (currentDate < endDate) { //start date comes before end date 
         if (vm.newEvent.recurringEventType == "Daily") {   //remember to make sure recurringEvent can't be False w type being something
           //require adding days to date object 
@@ -168,16 +189,16 @@ export default {
           //check again current date is valid, don't have to do this for daily. assuming end date inclusive
 
           //date needs to look like this "2021-05-06"
-          let formattedDate = currentDate.toISOString().split('T')[0];
+          let formattedDate = currentDate.getFullYear().toString() + "-" + (currentDate.getMonth() + 1).toString() + "-" + currentDate.getDate().toString();
           createNewEvent(vm.newEvent.name, formattedDate, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
         }
         else if (vm.newEvent.recurringEventType == "Weekly") {
-          //require adding 8 days to date object
-          currentDate.setDate(currentDate.getDate() + 8);
+          //require adding 7 days to date object
+          currentDate.setDate(currentDate.getDate() + 7);
           //check again current date is valid, don't have to do this for daily. assuming end date inclusive
           if (currentDate <= endDate) {
             //date needs to look like this "2021-05-06"
-            let formattedDate = currentDate.toISOString().split('T')[0];
+            let formattedDate = currentDate.getFullYear().toString() + "-" + (currentDate.getMonth() + 1).toString() + "-" + currentDate.getDate().toString();
             createNewEvent(vm.newEvent.name, formattedDate, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
           }
         }
@@ -187,7 +208,8 @@ export default {
           //check again current date is valid, don't have to do this for daily. assuming end date inclusive
           if (currentDate <= endDate) {
             //date needs to look like this "2021-05-06"
-            let formattedDate = currentDate.toISOString().split('T')[0];
+            let formattedDate = currentDate.getFullYear().toString() + "-" + (currentDate.getMonth() + 1).toString() + "-" + currentDate.getDate().toString();
+            console.log("formattedDate: " + formattedDate);
             createNewEvent(vm.newEvent.name, formattedDate, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
           }
         }
@@ -197,7 +219,7 @@ export default {
           //check again current date is valid, don't have to do this for daily. assuming end date inclusive
           if (currentDate <= endDate) {
             //date needs to look like this "2021-05-06"
-            let formattedDate = currentDate.toISOString().split('T')[0];
+            let formattedDate = currentDate.getFullYear().toString() + "-" + (currentDate.getMonth() + 1).toString() + "-" + currentDate.getDate().toString();
             createNewEvent(vm.newEvent.name, formattedDate, vm.newEvent.time, vm.newEvent.endTime, vm.newEvent.notes);
           }
         }
