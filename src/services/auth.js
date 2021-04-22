@@ -64,6 +64,7 @@ export function getEmail() {
 
 export async function getToken() //only used in graph.js
 {
+    console.log("in getToken");
     account = window.localStorage.getItem('msalAccount'); //changed from let account
     if (!account) {
       throw new Error(

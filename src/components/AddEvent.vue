@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="createEvent">
         <h1 id="customEvent">Create Custom Event</h1>
-        <div class="field field--half">
+        <div class="field field--half" >
             <label>
                 <span>Name</span>
                 <input type="text" v-model="newEvent.name" required />
@@ -145,21 +145,24 @@ export default {
       if (vm.newEvent.recurringEventType == "Daily") {
         vm.newEvent.recurringEvent = true; 
         vm.newEvent.daysBetween = 1;
-        console.log(vm.newEvent.recurringEvent);
+        console.log("in changeRecurringStatus, daysBetween = " + vm.newEvent.daysBetween);
       }
       else if (vm.newEvent.recurringEventType == "Weekly") {
         vm.newEvent.recurringEvent = true; 
         vm.newEvent.daysBetween = 7;
+        console.log("in changeRecurringStatus, daysBetween = " + vm.newEvent.daysBetween);
       }
       else if (vm.newEvent.recurringEventType == "Monthly") {
         vm.newEvent.recurringEvent = true; 
         vm.newEvent.daysBetween = 30;
+        console.log("in changeRecurringStatus, daysBetween = " + vm.newEvent.daysBetween);
       }
       else if (vm.newEvent.recurringEventType == "Yearly") {
         vm.newEvent.recurringEvent = true; 
         vm.newEvent.daysBetween = 365;
+        console.log("in changeRecurringStatus, daysBetween = " + vm.newEvent.daysBetween);
       }
-      console.log(vm.newEvent.recurringEvent);
+      console.log("in changeRecurringStatus, recurringEvent = " +vm.newEvent.recurringEvent);
     },
     async sync() {
       const vm = this;
@@ -230,23 +233,23 @@ export default {
 </script>
 
 <style scoped>
+
   #customEvent {
       margin-top: 0;
   }
 
   .submitForm .field {
       float: none;
-      display: inline-block;
       margin-bottom: 0;
   }
-  /*#repeat {
-      margin-bottom: 0;
-  } */
+   #repeat {
+      padding-right: 8px;
+      width: auto;
+  }  
 
    #repeatEnd {
-      float: right;
-      margin-bottom: 0;
-      padding: 0 0 0 16px; 
+  padding-left: 16px;
+    width: auto;
   } 
 
   /* #syncingToggle {
