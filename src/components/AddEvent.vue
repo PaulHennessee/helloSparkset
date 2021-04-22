@@ -33,8 +33,8 @@
         </div> 
         <div class="field field--half" id="repeat">
           <label>
-            <span>Repeat</span> 
-            <select v-model="newEvent.recurringEventType">
+            <span >Repeat</span> 
+            <select v-model="newEvent.recurringEventType" >
               <option value="Never">Never</option>
               <option value="Daily">Daily</option>
               <option value="Weekly">Weekly</option>
@@ -235,42 +235,40 @@ export default {
 <style scoped>
 
   #customEvent {
-      margin-top: 0;
+    margin-top: 0;
   }
 
   .submitForm .field {
-      float: none;
-      margin-bottom: 0;
+    float: none;
+    /* display: inline-block; */
+    margin-bottom: 0;
   }
-   /* #repeat {
-      padding-right: 8px;
-  }   */
 
-   #repeatEnd {
-  padding-left: 16px;
+  #repeat {
+    margin: 0 16px 16px 0;
+  }   
+
+  #repeatEnd {
+    margin: 0 0 16px 0;
   } 
 
-  /* #syncingToggle {
-      float: left;
-  } */
-
   #save {
-      width: auto;
-      float: right;
+    width: auto;
+    float: right;
   }
 
   #cancel {
-      width: auto;
-      float: right;
-      margin-right: 21px;
+    width: auto;
+    float: right;
+    margin-right: 21px;
   }
 
   #save .primary {
-      width: 70px;
+    width: 70px;
   }
 
   #cancel .primary {
-      width: 70px;
+    width: 70px;
   }
 
 </style>
