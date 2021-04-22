@@ -242,14 +242,12 @@ export default {
       float: none;
       margin-bottom: 0;
   }
-   #repeat {
+   /* #repeat {
       padding-right: 8px;
-      width: auto;
-  }  
+  }   */
 
    #repeatEnd {
   padding-left: 16px;
-    width: auto;
   } 
 
   /* #syncingToggle {
