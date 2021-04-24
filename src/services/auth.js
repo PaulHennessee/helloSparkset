@@ -1,13 +1,7 @@
 import * as Msal from "@azure/msal-browser";
 import {getUser} from "./graph.js";  
+import {msalConfig} from "..a";
 
-const msalConfig = {
-  auth: {
-    clientId: "bbe68f28-08fb-4b1c-8043-c1dc402550de", //changed to sparkset
-    redirectUri: "http://localhost:8080",               //remember to change this on live site
-    postLogoutRedirectUri: "https://admin.hellosparkset.com/settings"
-  }
-};
 
 const msalRequest = {
   scopes: [
@@ -21,7 +15,7 @@ const msalRequest = {
 const msalClient = new Msal.PublicClientApplication(msalConfig);
 
 let account = null;
-
+ 
 export async function signIn() //use this to sign in
 {
     // Login
@@ -37,16 +31,13 @@ export async function signIn() //use this to sign in
       let user = await getUser();
       // Save the profile in session
       window.localStorage.setItem('graphUser', JSON.stringify(user));
-      //updatePage(Views.home);                                // update in vue component
+
       console.log(user.userPrincipalName);                      //new
       return user.userPrincipalName;                            //new
-    } catch (error) {
-      console.log(error);
-      //updatePage(Views.error, {                              // update in vue component
-        //message: 'Error logging in',
-        //debug: error
-     // });
-      return false;                                             //new
+    } 
+    catch (error) {
+        console.log(error);
+        return false;                                             //new
     }
     
 };

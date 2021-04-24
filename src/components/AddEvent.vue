@@ -3,25 +3,25 @@
         <h1 id="customEvent">Create Custom Event</h1>
         <div class="field field--half" >
             <label>
-                <span>Name</span>
+                <span class="required-field" >Name</span>
                 <input type="text" v-model="newEvent.name" required />
             </label>
         </div>
         <div class="field field--half">
             <label>
-                <span>Date</span>
+                <span class="required-field">Date</span>
                 <input type="date" max="2099-12-31" v-model="newEvent.date" required />
             </label>
         </div>
         <div class="field field--half">
             <label>
-                <span>Start Time</span>
+                <span class="required-field">Start Time</span>
                 <input type="time" v-model="newEvent.time" required />
             </label>
         </div>
         <div class="field field--half">
           <label>
-            <span>End Time</span>
+            <span class="required-field">End Time</span>
             <input type="time" v-model="newEvent.endTime" required />
           </label>
         </div>
@@ -45,7 +45,7 @@
         </div>
         <div class="field field--half" id="repeatEnd" :key="newEvent.recurringEventType">
           <label v-if="newEvent.recurringEventType != 'Never'"> 
-            <span>End Repeat</span> 
+            <span class="required-field">End Repeat</span> 
             <input type="date" max="2099-12-31" v-model="newEvent.endRepeatDate" @click="changeRecurringStatus" required />
           </label> 
         </div>
@@ -70,16 +70,6 @@
                 </label>
         </div>
         <div class="submitForm"> 
-            <!--<div class="field" id="saves">
-              <button type="submit" class="primary" @click="sync">Save &amp; Sync</button>
-            </div>-->
-            <!--<div v-if="newEvent.syncing" class="field" id="save">
-                <button type="submit" class="primary">Save</button>
-            </div>
-            <div v-if="!newEvent.syncing" class="field" id="save">
-                <button type="submit" class="primary">Save</button>
-            </div>
-                OLD BUTTONS ABOVE. removed the text change (Sync) <- -> (Save & Sync), so no need to have the v-if/v-else condition-->
             <div class="field" id="save">
                 <button type="submit" class="primary">Save</button>
             </div>
@@ -233,42 +223,37 @@ export default {
 </script>
 
 <style scoped>
-
+  .required-field::after{
+    content:" *";
+    color:red;
+  }
   #customEvent {
     margin-top: 0;
   }
-
   .submitForm .field {
     float: none;
     /* display: inline-block; */
     margin-bottom: 0;
   }
-
   #repeat {
     margin: 0 16px 16px 0;
   }   
-
   #repeatEnd {
     margin: 0 0 16px 0;
   } 
-
   #save {
     width: auto;
     float: right;
   }
-
   #cancel {
     width: auto;
     float: right;
     margin-right: 21px;
   }
-
   #save .primary {
     width: 70px;
   }
-
   #cancel .primary {
     width: 70px;
   }
-
 </style>

@@ -1,6 +1,8 @@
 const express = require("express");
 const AV = require("leanengine");
 const path = require("path");
+require('dotenv').config();
+
 require("./cloud");
 const app = express();
 app.use(AV.express());
