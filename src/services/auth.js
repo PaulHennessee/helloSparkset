@@ -1,24 +1,24 @@
 import * as Msal from "@azure/msal-browser";
 import {getUser} from "./graph.js";  
-// const {msalConfig, msalRequest} = require("../../app");
+const m = require("../../config");
 
-const msalConfig = {
-  auth: {
-    clientId: process.env.MSAL_CLIENT_ID, //changed to sparkset
-    redirectUri: "http://localhost:8080",               //remember to change this on live site
-    postLogoutRedirectUri: "https://admin.hellosparkset.com/settings"
-  }
-};
-const msalRequest = {
-scopes: [
-  'user.read',
-  'mailboxsettings.read',
-  'calendars.readwrite'
-]
-};
+// const msalConfig = {
+//   auth: {
+//     clientId: process.env.MSAL_CLIENT_ID, //changed to sparkset
+//     redirectUri: "http://localhost:8080",               //remember to change this on live site
+//     postLogoutRedirectUri: "https://admin.hellosparkset.com/settings"
+//   }
+// };
+// const msalRequest = {
+// scopes: [
+//   'user.read',
+//   'mailboxsettings.read',
+//   'calendars.readwrite'
+// ]
+// };
 
 // Create the main MSAL instance
-const msalClient = new Msal.PublicClientApplication(msalConfig);
+const msalClient = new Msal.PublicClientApplication(m.msalConfig);
 
 let account = null;
  
@@ -27,7 +27,7 @@ export async function signIn() //use this to sign in
     // Login
     try {
       // Use MSAL to login
-      const authResult = await msalClient.loginPopup(msalRequest);
+      const authResult = await msalClient.loginPopup(m.msalRequest);
       // take this out after testing
       console.log('id_token acquired at: ' + new Date().toString()); 
       // Save the account username, needed for token acquisition
@@ -71,7 +71,7 @@ export async function getToken() //only used in graph.js
     try {
       // First, attempt to get the token silently
       const silentRequest = {
-        scopes: msalRequest.scopes,
+        scopes: m.msalRequest.scopes,
         account: msalClient.getAccountByUsername(account)
       };
   
@@ -81,7 +81,7 @@ export async function getToken() //only used in graph.js
       // If silent requests fails with InteractionRequiredAuthError,
       // attempt to get the token interactively
       if (silentError instanceof Msal.InteractionRequiredAuthError) {
-        const interactiveResult = await msalClient.acquireTokenPopup(msalRequest);
+        const interactiveResult = await msalClient.acquireTokenPopup(m.msalRequest);
         return interactiveResult.accessToken;
       } else {
         throw silentError;

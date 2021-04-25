@@ -1,9 +1,10 @@
 const express = require("express");
+require('dotenv').config(); 
 const AV = require("leanengine");
 const path = require("path");
 require("./cloud");
 
-require('dotenv').config({ path: './config.env' }); //we added this
+//we added this
 console.log(process.env.MSAL_CLIENT_ID);
 // const msalConfig = {
 //     auth: {
@@ -29,6 +30,6 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "dist/index.html"));
 });
 
-exports.app = app;          // same as module.exports = app 
-// exports.msalConfig = msalConfig;
-// exports.msalRequest = msalRequest;
+module.exports = app;          // same as module.exports = app 
+// module.exports.msalConfig = msalConfig;
+// module.exports.msalRequest = msalRequest;

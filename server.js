@@ -5,7 +5,7 @@ AV.init({
   masterKey: process.env.LEANCLOUD_APP_MASTER_KEY
 });
 AV.Cloud.useMasterKey();
-const {app} = require("./app");
+const app = require("./app");
 const PORT = parseInt(
   process.env.LEANCLOUD_APP_PORT || process.env.PORT || 3000
 );
