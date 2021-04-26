@@ -1,23 +1,7 @@
 import * as Msal from "@azure/msal-browser";
 import {getUser} from "./graph.js";  
-const m = require("../../config");
+const m = require("../../config.js");
 
-// const msalConfig = {
-//   auth: {
-//     clientId: process.env.MSAL_CLIENT_ID, //changed to sparkset
-//     redirectUri: "http://localhost:8080",               //remember to change this on live site
-//     postLogoutRedirectUri: "https://admin.hellosparkset.com/settings"
-//   }
-// };
-// const msalRequest = {
-// scopes: [
-//   'user.read',
-//   'mailboxsettings.read',
-//   'calendars.readwrite'
-// ]
-// };
-
-// Create the main MSAL instance
 const msalClient = new Msal.PublicClientApplication(m.msalConfig);
 
 let account = null;
@@ -27,6 +11,7 @@ export async function signIn() //use this to sign in
     // Login
     try {
       // Use MSAL to login
+      console.log("process_env" +process.env.VUE_APP_MSAL_CLIENT_ID);
       const authResult = await msalClient.loginPopup(m.msalRequest);
       // take this out after testing
       console.log('id_token acquired at: ' + new Date().toString()); 
