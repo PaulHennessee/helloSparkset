@@ -325,12 +325,6 @@ h2 > button.danger:hover {
 .column--left {
   margin: 12px auto 0 auto;
 }
-.row {
-    float: right;
-    margin: 24px auto 0 auto;
-    width: 100%;
-    overflow: auto;
-}
 .side-nav {
   position: fixed;
   top: 0;

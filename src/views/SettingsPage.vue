@@ -160,6 +160,12 @@ export default {
           }
         });
     },
+
+
+
+
+
+    
     updatePassword() {
       const vm = this;
       if (vm.pendingChanges.newPassword !== vm.pendingChanges.confirmPassword) {
@@ -175,7 +181,7 @@ export default {
             vm.$router.push("/");
           })
           .catch(error => {
-            alert(error);
+	            alert(error);
           });
       }
     },
@@ -194,9 +200,8 @@ export default {
 </script>
 
 <style scoped>
-
 #email {
-  padding-bottom: 15px;
+padding-bottom: 15px;
 }
 
 </style>

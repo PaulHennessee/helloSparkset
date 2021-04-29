@@ -4,10 +4,9 @@ import router from "./router";
 import store from "./store";
 import AV from "leancloud-storage";
 AV.init({
-  appId: 'nLNpC0EXtPodRpoeEmjDFnHC-MdYXbMMI',       //these shouldn't be exposed like this 
-  appKey: 'n9YcJdJ1dFxtpqOBOLUdbaA1'                //these shouldn't be exposed like this 
+  appId: "nLNpC0EXtPodRpoeEmjDFnHC-MdYXbMMI",
+  appKey: "n9YcJdJ1dFxtpqOBOLUdbaA1"
 });
-
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faBars,

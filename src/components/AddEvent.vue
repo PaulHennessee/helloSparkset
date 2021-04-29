@@ -1,83 +1,83 @@
 <template>
-    <form @submit.prevent="createEvent">
-        <h1 id="customEvent">Create Custom Event</h1>
-        <div class="field field--half" >
-            <label>
-                <span class="required-field" >Name</span>
-                <input type="text" v-model="newEvent.name" required />
+  <form @submit.prevent="createEvent">
+    <h1 id="customEvent">Create Custom Event</h1>
+    <div class="field field--half">
+      <label>
+        <span class="required-field">Name</span>
+        <input type="text" v-model="newEvent.name" required />
+      </label>
+    </div>
+    <div class="field field--half">
+      <label>
+        <span class="required-field">Date</span>
+        <input type="date" max="2099-12-31" v-model="newEvent.date" required />
+      </label>
+    </div>
+    <div class="field field--half">
+      <label>
+        <span class="required-field">Start Time</span>
+        <input type="time" v-model="newEvent.time" required />
+      </label>
+    </div>
+    <div class="field field--half">
+        <label>
+          <span class="required-field">End Time</span>
+          <input type="time" v-model="newEvent.endTime" required />
+        </label>
+      </div>
+    <div class="field">
+      <label>
+        <span>Notes</span>
+        <input id="eventNotes" type="text" v-model="newEvent.notes" />
+      </label>
+    </div>
+    <div class="field field--half" id="repeat">
+      <label>
+        <span >Repeat</span> 
+        <select v-model="newEvent.recurringEventType" >
+          <option value="Never">Never</option>
+          <option value="Daily">Daily</option>
+          <option value="Weekly">Weekly</option>
+          <option value="Monthly">Monthly</option>
+          <option value="Yearly">Yearly</option>
+        </select>
+      </label> 
+    </div>
+    <div class="field field--half" id="repeatEnd" :key="newEvent.recurringEventType">
+      <label v-if="newEvent.recurringEventType != 'Never'"> 
+        <span class="required-field">End Repeat</span> 
+        <input type="date" max="2099-12-31" v-model="newEvent.endRepeatDate" @click="changeRecurringStatus" required />
+      </label> 
+    </div>
+    <div class="field" id="syncingToggle">
+        <label>
+            <span>Syncing</span>
+            <toggle-button
+              :value="newEvent.syncing"
+              :color="{
+                checked: '#36d5d8',
+                unchecked: '#e52f2e'
+              }"
+              :labels="{
+                checked: 'Yes',
+                unchecked: 'No'
+              }"
+              :width="72"
+              :height="42"
+              :font-size="12"
+              @change="changeSyncing"
+              sync />
             </label>
+    </div>
+    <div class="submitForm"> 
+        <div class="field" id="save">
+            <button type="submit" class="primary">Save</button>
         </div>
-        <div class="field field--half">
-            <label>
-                <span class="required-field">Date</span>
-                <input type="date" max="2099-12-31" v-model="newEvent.date" required />
-            </label>
+        <div class="field" id="cancel">
+            <button type="button" class="cancel" @click="cancel">Cancel</button>
         </div>
-        <div class="field field--half">
-            <label>
-                <span class="required-field">Start Time</span>
-                <input type="time" v-model="newEvent.time" required />
-            </label>
-        </div>
-        <div class="field field--half">
-          <label>
-            <span class="required-field">End Time</span>
-            <input type="time" v-model="newEvent.endTime" required />
-          </label>
-        </div>
-        <div class="field">
-          <label> 
-            <span>Notes</span>
-            <input id="eventNotes" type="text" v-model="newEvent.notes" />
-          </label> 
-        </div> 
-        <div class="field field--half" id="repeat">
-          <label>
-            <span >Repeat</span> 
-            <select v-model="newEvent.recurringEventType" >
-              <option value="Never">Never</option>
-              <option value="Daily">Daily</option>
-              <option value="Weekly">Weekly</option>
-              <option value="Monthly">Monthly</option>
-              <option value="Yearly">Yearly</option>
-            </select>
-          </label>
-        </div>
-        <div class="field field--half" id="repeatEnd" :key="newEvent.recurringEventType">
-          <label v-if="newEvent.recurringEventType != 'Never'"> 
-            <span class="required-field">End Repeat</span> 
-            <input type="date" max="2099-12-31" v-model="newEvent.endRepeatDate" @click="changeRecurringStatus" required />
-          </label> 
-        </div>
-        <div class="field" id="syncingToggle">
-            <label>
-                <span>Syncing</span>
-                <toggle-button
-                  :value="newEvent.syncing"
-                  :color="{
-                    checked: '#36d5d8',
-                    unchecked: '#e52f2e'
-                  }"
-                  :labels="{
-                    checked: 'Yes',
-                    unchecked: 'No'
-                  }"
-                  :width="72"
-                  :height="42"
-                  :font-size="12"
-                  @change="changeSyncing"
-                  sync />
-                </label>
-        </div>
-        <div class="submitForm"> 
-            <div class="field" id="save">
-                <button type="submit" class="primary">Save</button>
-            </div>
-            <div class="field" id="cancel">
-                <button type="button" class="cancel" @click="cancel">Cancel</button>
-            </div>
-        </div>
-    </form>
+    </div>
+  </form>
 </template>
 
 <script> 
@@ -223,6 +223,8 @@ export default {
 </script>
 
 <style scoped>
+
+
   .required-field::after{
     content:" *";
     color:red;
@@ -230,30 +232,40 @@ export default {
   #customEvent {
     margin-top: 0;
   }
+
   .submitForm .field {
     float: none;
     /* display: inline-block; */
     margin-bottom: 0;
   }
+
   #repeat {
     margin: 0 16px 16px 0;
   }   
+
   #repeatEnd {
     margin: 0 0 16px 0;
   } 
+
   #save {
     width: auto;
     float: right;
   }
+
   #cancel {
     width: auto;
     float: right;
     margin-right: 21px;
   }
+
   #save .primary {
     width: 70px;
   }
+
   #cancel .primary {
     width: 70px;
   }
+
 </style>
+
+

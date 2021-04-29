@@ -121,10 +121,12 @@ export default {
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style>
+
 .required-field::after{
     content:" *";
     color:red;
 }
+
 .multiselect__tags,
 .multiselect__tag,
 .multiselect__tag-icon {
@@ -159,5 +161,3 @@ export default {
   background-color: #36d5d8;
 }
 </style>
-
-<style scoped></style>

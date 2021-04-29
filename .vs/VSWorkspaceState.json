@@ -2,11 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\components",
-    "\\src\\router",
-    "\\src\\store",
-    "\\src\\views"
+    "\\src\\components"
   ],
-  "SelectedNode": "\\src\\components\\TheGlobalSearch.vue",
+  "SelectedNode": "\\src\\components\\AddEvent.vue",
   "PreviewInSolutionExplorer": false
 }
